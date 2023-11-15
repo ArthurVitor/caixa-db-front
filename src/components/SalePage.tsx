@@ -1,7 +1,7 @@
 export function SalePage() {
-    return (
-        <>
-        <p>Página de Vendas</p>
-        </>
-    );
+  return (
+    <div className="content">
+      <p>Página de Sales</p>
+    </div>
+  );
 }

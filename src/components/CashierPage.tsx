@@ -1,7 +1,7 @@
 export function CashierPage() {
-    return (
-        <>
-        <p>Página de Caixa</p>
-        </>
-    );
+  return (
+    <div className="content">
+      <p>Página de Caixa</p>
+    </div>
+  );
 }

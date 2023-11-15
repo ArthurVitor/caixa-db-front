@@ -1,7 +1,7 @@
 export function ProductPage() {
-    return (
-        <>
-        <p>Página de Produto</p>
-        </>
-    );
+  return (
+    <div className="content">
+      <p>Página de Produtos</p>
+    </div>
+  );
 }

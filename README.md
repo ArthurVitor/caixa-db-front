@@ -69,7 +69,7 @@ $ npm install
 
 | Branch | Funcionalidade | 
 | :-: | :-: |
-| Feature | Branch para desenvolvimento de uma funcionalidade específica. Devem ter o nome iniciado por feature, por exemplo: "feature/reestruturacao-pastas". São criadas sempre a partir da branch "master".|
+| Feature | Branch para desenvolvimento de uma funcionalidade específica. Devem ter o nome iniciado por feature, por exemplo: "chore/reestruturacao-pastas". São criadas sempre a partir da branch "master".|
 | Release | Serve como ponte para fazer o merge da dev para a master. Caso haja alguma alteração, também deve ser sincronizada com a Branch "dev".|
 | Bugfix | Criada a partir da branch "dev" para realizar correções de erros encontrados no sistema em desenvolvimento. Quando concluída, ela é excluída após realizar o merge com a branch "dev".|
 | Hotfix | Criada a partir da master para realizar correções encontradas no sistema em produção. Quando concluída, ela é excluída após realizar o merge com a branch "dev" e "master". |

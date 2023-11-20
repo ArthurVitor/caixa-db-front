@@ -1,5 +1,5 @@
 import PaymentMethod from "./PaymentMethodDto";
-import SaleItem from "./SaleItemDto";
+import SaleItem from "./ItemSellDto";
 
 export default interface Sale {
     id: number;

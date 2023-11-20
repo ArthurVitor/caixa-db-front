@@ -1,5 +1,5 @@
-import PaymentMethod from "./paymentmethod.tso";
-import SaleItem from "./saleitem.tdo";
+import PaymentMethod from "./PaymentMethodDto";
+import SaleItem from "./SaleItemDto";
 
 export default interface Sale {
     id: number;

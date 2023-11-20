@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider, createRoutesFromElements, Route } from "react-router-dom";
 
-import { RootPage } from "./components/RootPage";
+import  RootPage  from "./components/RootPage";
 import { CashierPage } from "./components/cashier/CashierPage";
 import { SalePage } from "./components/sale/SalePage";
 import { ProductPage } from "./components/product/ProductPage";

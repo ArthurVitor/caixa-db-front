@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider, createRoutesFromElements, Route } 
 import { RootPage } from "./components/RootPage";
 import { CashierPage } from "./components/CashierPage";
 import { SalePage } from "./components/SalePage";
-import { ProductPage } from "./components/ProductPage";
+import { ProductPage } from "./pages/product/ProductPage";
 
 import "./App.css";
 

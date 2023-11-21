@@ -24,6 +24,10 @@ export default class SaleService {
   }
 
   public static getFormattedDate(string: string): Date {
+    if (!string) {
+      return new Date();
+    }
+    
     let spaceSplit = string.split(" ");
 
     let [day, month, year] = spaceSplit[0].split("/");

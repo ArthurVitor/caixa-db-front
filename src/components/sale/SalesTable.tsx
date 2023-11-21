@@ -80,13 +80,13 @@ export default function SaleTable() {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((sale) => {
                   return (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={sale.id}>
+                    <TableRow hover role="checkbox" tabIndex={-1} key={sale.id * Math.random()}>
                       <TableCell key={"id"}>{sale.id}</TableCell>
                       <TableCell key={"action"}>
                         <Link to={"/vendas/" + sale.id}>Editar</Link>
                       </TableCell>
                       <TableCell key={"resume"}>
-                        {"CARTÃO - R$ " + sale.paidAmount}
+                        {(sale.paymentMethod?.name ?? "Dinheiro") +  " - R$ " + sale.subtotal.toFixed(2).replace(".", ",")}
                       </TableCell>
                       <TableCell key={"type"}>Venda</TableCell>
                       <TableCell key={"date"}>
@@ -98,10 +98,11 @@ export default function SaleTable() {
                           "/" +
                           sale.saleDate.getFullYear()}
                       </TableCell>
-                      <TableCell key={"hour"}>{"17:37"}</TableCell>
+                      <TableCell key={"hour"}>{(sale.saleDate.getHours() < 10 ? "0" + sale.saleDate.getHours() : sale.saleDate.getHours()) + ":" + (sale.saleDate.getMinutes() < 10 ? "0" + sale.saleDate.getMinutes() : sale.saleDate.getMinutes())}</TableCell>
                       <TableCell key={"items"}>
-                        <p>- Item 1</p>
-                        <p>- Item 2</p>
+                        {sale.items.length > 1 && <p>{sale.items[0].quantity}x - {sale.items[0].product?.name}</p>}
+                        {sale.items.length > 2 && <p>{sale.items[1].quantity}x - {sale.items[1].product?.name}</p>}
+                        {sale.items.length > 3 && <p>{sale.items[2].quantity}x - {sale.items[2].product?.name}</p>}
                       </TableCell>
                     </TableRow>
                   );

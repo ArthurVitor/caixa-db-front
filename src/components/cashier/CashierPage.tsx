@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import CashierCard from "./CashierCard";
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import ToggleButton from "./ToggleButtons";
 import CashierService from '../../services/CashierService';
 import CashierDto from '../../dto/CashierDto';
+import { Link } from 'react-router-dom';
 
 
 export function CashierPage() {
 
-  const [isSingleCashierMode, setSingleCashierMode] = useState(false);
   const [cashiers, setCashiers] = useState<CashierDto[]>([]);
 
   const cardContainerStyle = {
@@ -43,7 +43,7 @@ export function CashierPage() {
         {cashiers.map((cashier) => (
         <Grid item xs={12} sm={6} md={4} key={cashier.id}>
           <div style={cardContainerStyle}>
-            <CashierCard cashier={cashier} />
+          <Link to={`/caixas/${cashier.id}`}> <CashierCard cashier={cashier}/></Link>
           </div>
         </Grid>
         ))}

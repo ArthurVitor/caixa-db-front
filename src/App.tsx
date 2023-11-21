@@ -7,11 +7,13 @@ import { ProductPage } from "./components/product/ProductPage";
 import { ItemSellPage } from "./components/itemsell/ItemSellPage";
 
 import "./App.css";
+import CashierDetailsPage from "./components/cashier/CashierDetailsPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootPage />}>
       <Route path="/caixas" element={<CashierPage />} />
+      <Route path="/caixas/:id" element={<CashierDetailsPage />} />
       <Route path="/vendas" element={<SalesPage />} />
       <Route path="/produtos" element={<ProductPage />} />
       <Route path="/itemsell" element={<ItemSellPage />} />

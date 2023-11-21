@@ -17,9 +17,7 @@ export default function BasicCard({cashier}: BasicCardProps ) {
   useEffect(() => {
     const fetchSubTotal = async () => {
       try {
-        console.log('Antes de chamar getTotal. Cashier ID:', cashier.id);
         const total = await CashierService.getTotal(cashier.id);
-        console.log('Depois de chamar getTotal. Total:', total);
         setSubTotal(total);
       } catch (error) {
         console.error('Erro ao obter o total:', error);

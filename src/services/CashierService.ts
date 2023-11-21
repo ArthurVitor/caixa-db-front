@@ -4,7 +4,6 @@ export default class CashierService {
     public static async getAll(): Promise<Cashier[]> {
         return fetch (`http://localhost:8080/api/cashiers/all`).then(response => {
             if (response.ok) {
-                console.log(response);
                 return response.json().then((cashiers) => 
                 cashiers.map((cashier: any) => ({
                    ...cashier, 

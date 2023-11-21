@@ -16,9 +16,11 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import { Link, Outlet } from "react-router-dom";
+import AccountBalanceRoundedIcon from '@mui/icons-material/AccountBalanceRounded';
+import AttachMoneyRoundedIcon from '@mui/icons-material/AttachMoneyRounded';
+import LocalOfferRoundedIcon from '@mui/icons-material/LocalOfferRounded';
+
 const drawerWidth = 240;
 
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -133,18 +135,38 @@ export default function MiniDrawer() {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Caixas', 'Vendas', 'Produtos'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <Link to={`/${text.toLowerCase()}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+            <ListItem key={1} disablePadding sx={{ display: 'block' }}>
+              <Link to={"/caixas"} style={{ textDecoration: 'none', color: 'inherit' }}>
                 <ListItemButton sx={{minHeight: 48, justifyContent: open ? 'initial' : 'center', px: 2.5,}}>
                   <ListItemIcon sx={{minWidth: 0, mr: open ? 3 : 'auto', justifyContent: 'center',}}>
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                    <AccountBalanceRoundedIcon/>
                   </ListItemIcon>
-                  <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                  <ListItemText primary={"Caixas"} sx={{ opacity: open ? 1 : 0 }} />
                 </ListItemButton>
               </Link>
             </ListItem>
-          ))}
+
+            <ListItem key={2} disablePadding sx={{ display: 'block' }}>
+              <Link to={"/vendas"} style={{ textDecoration: 'none', color: 'inherit' }}>
+                <ListItemButton sx={{minHeight: 48, justifyContent: open ? 'initial' : 'center', px: 2.5,}}>
+                  <ListItemIcon sx={{minWidth: 0, mr: open ? 3 : 'auto', justifyContent: 'center',}}>
+                    <AttachMoneyRoundedIcon/>
+                  </ListItemIcon>
+                  <ListItemText primary={"Vendas"} sx={{ opacity: open ? 1 : 0 }} />
+                </ListItemButton>
+              </Link>
+            </ListItem>
+
+            <ListItem key={3} disablePadding sx={{ display: 'block' }}>
+              <Link to={"/produtos"} style={{ textDecoration: 'none', color: 'inherit' }}>
+                <ListItemButton sx={{minHeight: 48, justifyContent: open ? 'initial' : 'center', px: 2.5,}}>
+                  <ListItemIcon sx={{minWidth: 0, mr: open ? 3 : 'auto', justifyContent: 'center',}}>
+                    <LocalOfferRoundedIcon/>
+                  </ListItemIcon>
+                  <ListItemText primary={"Produtos"} sx={{ opacity: open ? 1 : 0 }} />
+                </ListItemButton>
+              </Link>
+            </ListItem>
         </List>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>

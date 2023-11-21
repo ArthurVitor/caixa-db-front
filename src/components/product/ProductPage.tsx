@@ -17,6 +17,9 @@ export function ProductPage() {
   }, []);
   
   return (
-    <CustomPaginationActionsTable productList={productList}/>
+    <>
+      <p>Listando todos os produtos</p>
+      <CustomPaginationActionsTable productList={productList}/>
+    </>
   );
 }

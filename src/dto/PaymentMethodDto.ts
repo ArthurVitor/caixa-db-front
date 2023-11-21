@@ -1,1 +1,4 @@
-export default interface PaymentMethod {}
+export default interface PaymentMethod {
+    id: number;
+    name: string;
+}

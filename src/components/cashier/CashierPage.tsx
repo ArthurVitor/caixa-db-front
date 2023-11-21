@@ -1,6 +1,7 @@
 import CashierCard from "./CashierCard";
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import ToggleButton from "./ToggleButtons";
 
 
 export function CashierPage() {
@@ -13,6 +14,10 @@ export function CashierPage() {
   };
 
   return (
+    <>
+    
+    <ToggleButton/>
+
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
         {/* No modo mobile (xs), cada item ocupará 12 colunas */}
@@ -33,5 +38,7 @@ export function CashierPage() {
         </Grid>
       </Grid>
     </Box>
+    </>
+    
   );
 }

@@ -2,7 +2,6 @@ import "../../App.css"
 import "./ProductPage.css"
 
 import { useEffect } from "react";
-import { ProductComponent } from "../../components/product-component/ProductComponent";
 import CustomPaginationActionsTable from "./Table";
 
 export function ProductPage() {

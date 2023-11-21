@@ -23,7 +23,6 @@ interface Column {
 
 const columns: Column[] = [
   { id: "id", label: "Número", minWidth: 70 },
-  { id: "action", label: "Ação", minWidth: 70 },
   { id: "resume", label: "Resumo", minWidth: 200 },
   { id: "type", label: "Tipo", minWidth: 90 },
   { id: "date", label: "Data", minWidth: 130 },
@@ -82,9 +81,6 @@ export default function SaleTable() {
                   return (
                     <TableRow hover role="checkbox" tabIndex={-1} key={sale.id * Math.random()}>
                       <TableCell key={"id"}>{sale.id}</TableCell>
-                      <TableCell key={"action"}>
-                        <Link to={"/vendas/" + sale.id}>Editar</Link>
-                      </TableCell>
                       <TableCell key={"resume"}>
                         {(sale.paymentMethod?.name ?? "Dinheiro") +  " - R$ " + sale.subtotal.toFixed(2).replace(".", ",")}
                       </TableCell>

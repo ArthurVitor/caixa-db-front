@@ -17,26 +17,25 @@ interface Column {
 }
 
 const columns: Column[] = [
-  { id: 'id', label: 'ID', minWidth: 170, align: "right", format: (value: number) => value.toLocaleString('en-US'), },
-  { id: 'name', label: 'Name', minWidth: 170, align: "right" },
+  { id: 'id', label: 'ID', minWidth: 170, format: (value: number) => value.toLocaleString('en-US'), },
+  { id: 'name', label: 'Name', minWidth: 170, },
   {
     id: 'price',
     label: 'Price',
     minWidth: 170,
-    align: "right",
     format: (value: number) => value.toLocaleString('en-US'),
   },
   {
     id: 'barcode',
     label: 'Barcode',
     minWidth: 170,
-    align: "right"
   },
   {
     id: 'descontinuationdate',
     label: 'Descontinuation date',
     minWidth: 170,
     align: "right",
+    format: (value) => String(value)
   },
 ];
 
@@ -89,15 +88,14 @@ export default function ColumnGroupingTable() {
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
-              <TableCell align="left" colSpan={5}>
-                Produtos
+              <TableCell colSpan={5}>
+                
               </TableCell>
             </TableRow>
             <TableRow>
               {columns.map((column) => (
-                <TableCell
+                <TableCell colSpan={1}
                   key={column.id}
-                  align={column.align}
                   style={{ top: 57, minWidth: column.minWidth }}
                 >
                   {column.label}

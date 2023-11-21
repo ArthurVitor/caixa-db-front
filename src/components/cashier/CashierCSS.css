@@ -1,0 +1,22 @@
+:root {
+    --primary: #374151;
+}
+
+.custom-button {
+    border: 2px solid var(--primary) !important;
+    color: var(--primary) !important;
+    border-radius: 999px !important;
+    padding: 0.5rem 2rem !important;
+}
+
+.custom-button-toggled {
+    background-color: var(--primary) !important;
+    color: whitesmoke !important;
+    border: 2px solid var(--primary) !important;
+    border-radius: 999px !important;
+    padding: 0.5rem 2rem !important;
+}
+
+.float-r {
+    float: right !important;
+}

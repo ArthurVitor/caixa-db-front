@@ -11,4 +11,5 @@ export default interface Sale {
     change: number;
     
     saleDate: Date;
+    subtotal: number;
 }

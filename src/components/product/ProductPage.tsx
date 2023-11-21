@@ -2,7 +2,7 @@ import "../../App.css"
 import "./ProductPage.css"
 
 import { useEffect, useState } from "react";
-import CustomPaginationActionsTable from "./Table";
+import CustomPaginationActionsTable from "./ProductTable";
 import ProductService from "../../services/ProductService";
 import Product from "../../dto/ProductDto";
 
@@ -14,7 +14,6 @@ export function ProductPage() {
 
     ProductService.getProducts().then(data => {
       setProductList(data)
-      
     })
   }, []);
   

@@ -9,7 +9,7 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 
 interface Column {
-  id: 'id' | 'name' | 'price' | 'barcode' | 'descontinuationdate';
+  id: 'id' | 'name' | 'price' | 'barcode' | 'discontinuationdate';
   label: string;
   minWidth?: number;
   align?: 'right';
@@ -31,8 +31,8 @@ const columns: Column[] = [
     minWidth: 170,
   },
   {
-    id: 'descontinuationdate',
-    label: 'Descontinuation date',
+    id: 'discontinuationdate',
+    label: 'Discontinuation date',
     minWidth: 170,
     align: "right",
     format: (value) => String(value)
@@ -44,7 +44,7 @@ interface Data {
   name: string;
   price: number;
   barcode: string;
-  descontinuationdate: string | null;
+  discontinuationdate: string | null;
 }
 
 function createData(
@@ -52,24 +52,19 @@ function createData(
   name: string,
   price: number,
   barcode: string,
-  descontinuationdate: string | null,
+  discontinuationdate: string | null,
 ): Data {
-  return { id, name, price, barcode, descontinuationdate };
+  return { id, name, price, barcode, discontinuationdate };
 }
 
-const rows = [
-  createData(38, "Pão", 0.75, "7777777777777", null),
-  createData(39, "Ovo", 0.50, "8888888888888", null),
-  createData(40, "Óleo", 3.80, "9999999999999", null),
-  createData(41, "Refrigerante Coca-Cola 2L", 8.0, "1111111111111", null),
-  createData(42, "Salsicha 1Kg", 12.99, "2222222222222", null),
-  createData(42, "Salsicha 1Kg", 12.99, "2222222222222", null),
-  createData(42, "Salsicha 1Kg", 12.99, "2222222222222", null),
-  createData(42, "Salsicha 1Kg", 12.99, "2222222222222", null),
-  createData(42, "Salsicha 1Kg", 12.99, "2222222222222", null),
-];
+export default function ColumnGroupingTable(props: { productList: object[] }) {
 
-export default function ColumnGroupingTable() {
+  const rows: object[] = [];
+
+  props.productList.forEach(p => {
+    rows.push(createData(p.id, p.name, p.price, p.barcode, p.discontinuationdate))
+  })
+
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -88,15 +83,10 @@ export default function ColumnGroupingTable() {
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
-              <TableCell colSpan={5}>
-                
-              </TableCell>
-            </TableRow>
-            <TableRow>
               {columns.map((column) => (
                 <TableCell colSpan={1}
                   key={column.id}
-                  style={{ top: 57, minWidth: column.minWidth }}
+                  style={{ top: 0, minWidth: column.minWidth }}
                 >
                   {column.label}
                 </TableCell>

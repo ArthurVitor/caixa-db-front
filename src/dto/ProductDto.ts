@@ -8,7 +8,7 @@ export default interface Product {
 
     barcode: string;
 
-    discontinuation_date?: Date;
+    discontinuation_date: Date | null;
 
     get getId(): number;
 

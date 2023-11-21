@@ -96,9 +96,11 @@ export default function SaleTable() {
                       </TableCell>
                       <TableCell key={"hour"}>{(sale.saleDate.getHours() < 10 ? "0" + sale.saleDate.getHours() : sale.saleDate.getHours()) + ":" + (sale.saleDate.getMinutes() < 10 ? "0" + sale.saleDate.getMinutes() : sale.saleDate.getMinutes())}</TableCell>
                       <TableCell key={"items"}>
-                        {sale.items.length > 1 && <p>{sale.items[0].quantity}x - {sale.items[0].product?.name}</p>}
-                        {sale.items.length > 2 && <p>{sale.items[1].quantity}x - {sale.items[1].product?.name}</p>}
-                        {sale.items.length > 3 && <p>{sale.items[2].quantity}x - {sale.items[2].product?.name}</p>}
+                        {
+                          sale.items.map(item => {
+                            return <p key={item.id * Math.random()}>{item.quantity}x {item.product?.name}</p>
+                          })
+                        }
                       </TableCell>
                     </TableRow>
                   );

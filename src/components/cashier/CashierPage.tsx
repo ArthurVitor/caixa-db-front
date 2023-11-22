@@ -5,7 +5,8 @@ import Grid from '@mui/material/Grid';
 import ToggleButton from "./ToggleButtons";
 import CashierService from '../../services/CashierService';
 import CashierDto from '../../dto/CashierDto';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
+
 
 
 export function CashierPage() {
@@ -36,7 +37,7 @@ export function CashierPage() {
         {filtered_cashiers.map((cashier) => (
         <Grid item xs={12} sm={6} md={4} key={cashier.id}>
           <div className='cardContainer'>
-            <CashierCard cashier={cashier} />
+            <Link to={`/caixas/${cashier.id}`}> <CashierCard cashier={cashier}/></Link>
           </div>
         </Grid>
         ))}

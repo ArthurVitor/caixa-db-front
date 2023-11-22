@@ -4,7 +4,7 @@ import SaleItem from "./ItemSellDto";
 export default interface Sale {
     id?: number;
 
-    items: SaleItem[];
+    items?: SaleItem[];
     paymentMethod?: PaymentMethod;
 
     paidAmount?: number;

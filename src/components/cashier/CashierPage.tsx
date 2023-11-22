@@ -5,20 +5,14 @@ import Grid from '@mui/material/Grid';
 import ToggleButton from "./ToggleButtons";
 import CashierService from '../../services/CashierService';
 import CashierDto from '../../dto/CashierDto';
-import { Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
+
 
 
 export function CashierPage() {
-
   const [cashiers, setCashiers] = useState<CashierDto[]>([]);
-
-  const cardContainerStyle = {
-    height: '100%', // Define a altura para 100% do contêiner pai
-    display: 'flex',
-    flexDirection: 'column' as const,
-    alignItems: 'center' as const, // Alinha os itens no centro verticalmente
-    justifyContent: 'center' as const, // Alinha os itens no centro horizontalmente
-  };
+  const { parametroBooleano } = useParams();
+  const filtered_cashiers = cashiers.filter(cashier => cashier.open === (parametroBooleano === "true"))
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,14 +30,14 @@ export function CashierPage() {
   return (
     <>
     
-    <ToggleButton/>
+    <ToggleButton visibility={parametroBooleano === "true" ? true : false} />
+    
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
-        {/* No modo mobile (xs), cada item ocupará 12 colunas */}
-        {cashiers.map((cashier) => (
+        {filtered_cashiers.map((cashier) => (
         <Grid item xs={12} sm={6} md={4} key={cashier.id}>
-          <div style={cardContainerStyle}>
-          <Link to={`/caixas/${cashier.id}`}> <CashierCard cashier={cashier}/></Link>
+          <div className='cardContainer'>
+            <Link to={`/caixas/${cashier.id}`}> <CashierCard cashier={cashier}/></Link>
           </div>
         </Grid>
         ))}

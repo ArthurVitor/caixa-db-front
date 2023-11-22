@@ -16,6 +16,7 @@ import CashierDetailsPage from "./components/cashier/CashierDetailsPage";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootPage />}>
+      <Route path="/caixas/:parametroBooleano" element={<CashierPage />} />
       <Route path="/caixas" element={<CashierPage />} />
       <Route path="/caixas/:id" element={<CashierDetailsPage />} />
       <Route path="/vendas" element={<SalesPage />} />

@@ -2,11 +2,23 @@
     --primary: #374151;
 }
 
+.cardContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 .custom-button {
     border: 2px solid var(--primary) !important;
     color: var(--primary) !important;
     border-radius: 999px !important;
     padding: 0.5rem 2rem !important;
+}
+
+.custom-button > a {
+    color: var(--primary);
+    text-decoration: none;
 }
 
 .custom-button-toggled {
@@ -15,6 +27,11 @@
     border: 2px solid var(--primary) !important;
     border-radius: 999px !important;
     padding: 0.5rem 2rem !important;
+}
+
+.custom-button-toggled > a {
+    color: whitesmoke;
+    text-decoration: none;
 }
 
 .float-r {

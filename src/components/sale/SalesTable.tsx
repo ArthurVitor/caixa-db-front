@@ -94,8 +94,8 @@ export default function SaleTable() {
                       <TableCell key={"hour"}>{DateUtils.getFormattedTime(sale.saleDate)}</TableCell>
                       <TableCell key={"items"}>
                         {
-                          sale.items.map(item => {
-                            return <p key={item.id * Math.random()}>{item.quantity}x {item.product?.name}</p>
+                          sale.items.map((item, index) => {
+                            return <p key={index}>{item.quantity}x {item.product?.name}</p>
                           })
                         }
                       </TableCell>

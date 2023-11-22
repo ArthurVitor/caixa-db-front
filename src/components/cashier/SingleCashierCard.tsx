@@ -79,7 +79,7 @@ export default function BasicCard({cashier}: BasicCardProps ) {
             {cashier.sales.map((sale) => (
             <Step>
                 <StepLabel>
-                {sale.subtotal.toFixed(2)}
+                {sale.subTotal?.toFixed(2)}
                 <br></br>
                 <p>{sale.paymentMethod?.name}</p>
                 <Box sx={{ mb: 2 }}>

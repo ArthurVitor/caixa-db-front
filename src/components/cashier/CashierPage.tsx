@@ -37,7 +37,7 @@ export function CashierPage() {
         {filtered_cashiers.map((cashier) => (
         <Grid item xs={12} sm={6} md={4} key={cashier.id}>
           <div className='cardContainer'>
-            <Link to={`/caixas/${cashier.id}`}> <CashierCard cashier={cashier}/></Link>
+            <Link to={`/caixas/${parametroBooleano}/${cashier.id}`}> <CashierCard cashier={cashier}/></Link>
           </div>
         </Grid>
         ))}

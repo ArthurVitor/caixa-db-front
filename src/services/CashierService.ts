@@ -67,7 +67,7 @@ export default class CashierService {
             if(response.ok) {
                 return response.json();
             } else {
-                throw new Error(); 
+                throw new Error("Service"); 
             }
         }); 
     }

@@ -32,22 +32,6 @@ ${spacing}
 
 
 export default function BasicCard({cashier}: BasicCardProps ) {
-
-  const [subTotal, setSubTotal] = useState(0);
-
-  useEffect(() => {
-    const fetchSubTotal = async () => {
-      try {
-        const total = await CashierService.getTotal(cashier.id);
-        setSubTotal(total);
-      } catch (error) {
-        console.error('Erro ao obter o total:', error);
-      }
-    };
-
-    fetchSubTotal();
-  }, [cashier.id]);
-
   return (
     <div style={{ display: 'flex', gap: '20vh' }}>
       <Card sx={{width: 450, height: 400, backgroundColor: "#FAFAF5", border: "2px solid #E6E6E6", borderRadius: 5 , display: 'flex', alignItems: 'center'}}>
@@ -58,7 +42,7 @@ export default function BasicCard({cashier}: BasicCardProps ) {
           <Typography variant="body2">
             <span style={{fontFamily: "arial", fontSize: 18}}>Aberto desde: {(cashier.openDate.getDay() < 10 ? "0" + cashier.openDate.getDay(): cashier.openDate.getDay()) +"/" + cashier.openDate.getMonth() +"/" + cashier.openDate.getFullYear()}</span>
             <br />
-            <span style={{fontSize: 20, color: "#426B1F", fontWeight: 'bolder'}}>Sub Total: ${subTotal.toFixed(2)}</span>
+            <span style={{fontSize: 20, color: "#426B1F", fontWeight: 'bolder'}}>Sub Total: ${cashier.sales.reduce((acc, sales) => (acc + (sales.subTotal ?? 0)), 0).toFixed(2)}</span>
           </Typography>
         </CardContent>
       </Card>   

@@ -41,15 +41,4 @@ export default class CashierService {
         });
     }
     
-    public static async getTotal(id: number):Promise<number> {
-        return fetch(`http://localhost:8080/api/cashiers/totalSales/${id}`).then(response => {
-            if(response.ok) {
-                return response.json();
-            } else {
-                console.error('Erro ao obter o total:',response.statusText);
-                throw new Error("Erro service"); 
-            }
-        });
-    }
-    
 }

@@ -57,8 +57,11 @@ export default function CreateSalePage() {
     const [paymentMethod, setPaymentMethod] = useState<PaymentMethod | null>(null); // 4
     const [paidAmount, setPaidAmount] = useState<number>(0); // 5
 
-    const handleSubmit = () => {
-        if (!cashier || !paymentMethod || !items.length) return;
+    const handleSubmit = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+        if (!cashier || !paymentMethod || !items.length) {
+            event.preventDefault();
+            return;
+        }
 
         SaleService.createSale({
             paymentMethod: paymentMethod!,
@@ -203,7 +206,7 @@ export default function CreateSalePage() {
                             onChange={(event) => setPaidAmount(Number(event.target.value))}
                         />
                     </div>
-                    <Button variant="contained" component={Link} onClick={(event: any) => {handleSubmit(); event.preventDefault()}} style={{height: "70%",marginTop: "auto", marginBottom:"auto", marginLeft: "30px"}}>Finalizar venda</Button>
+                    <Button variant="contained" component={Link} to={"/caixas/" + cashier!.id} onClick={(event) => handleSubmit(event)} style={{height: "70%",marginTop: "auto", marginBottom:"auto", marginLeft: "30px"}}>Finalizar venda</Button>
                 </FormControl>
             </Grid>
         </Grid>

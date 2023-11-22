@@ -9,37 +9,12 @@ import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
-import StepContent from '@mui/material/StepContent';
 
 
 
 interface BasicCardProps {
     cashier: CashierDto;
   }
-
-
-  const steps = [
-    {
-      label: 'Select campaign settings',
-      description: `For each ad campaign that you create, you can control how much
-                you're willing to spend on clicks and conversions, which networks
-                and geographical locations you want your ads to show on, and more.`,
-    },
-    {
-      label: 'Create an ad group',
-      description:
-        'An ad group contains one or more ads which target a shared set of keywords.',
-    },
-    {
-      label: 'Create an ad',
-      description: `Try out different ad text to see what brings in the most customers,
-                and learn how to enhance your ads using features like ad extensions.
-                If you run into any problems with your ads, find out how to tell if
-                they're running and how to resolve approval issues.`,
-    },
-  ];
-
-
 
 
 export default function BasicCard({cashier}: BasicCardProps ) {
@@ -69,7 +44,7 @@ export default function BasicCard({cashier}: BasicCardProps ) {
         <Typography variant="body2">
           <span style={{fontFamily: "arial", fontSize: 18}}>Aberto desde: {(cashier.openDate.getDay() < 10 ? "0" + cashier.openDate.getDay(): cashier.openDate.getDay()) +"/" + cashier.openDate.getMonth() +"/" + cashier.openDate.getFullYear()}</span>
           <br />
-          <span style={{fontSize: 20, color: "#426B1F", fontWeight: 'bolder'}}>Sub Total: ${subTotal}</span>
+          <span style={{fontSize: 20, color: "#426B1F", fontWeight: 'bolder'}}>Sub Total: ${subTotal.toFixed(2)}</span>
         </Typography>
       </CardContent>
     </Card>
@@ -84,19 +59,32 @@ export default function BasicCard({cashier}: BasicCardProps ) {
             }}
         ></div>
 
-    <div style={{width: 350, height: 400, border:'none', display: 'flex', alignItems: 'center'}}>
+    <div style={{width: 400, height: 'auto', border:'none', display: 'flex', alignItems: 'center'}}>
        <Box sx={{ maxWidth: 400 }}>
+
+        <div>
+            Movimentação
+        </div>
+
+
         <Stepper orientation="vertical">
-            {steps.map((step) => (
-            <Step key={step.label}>
+             <Step>
                 <StepLabel>
-                {step.label}
+                <span style={{fontFamily: "arial", fontSize: 18}}>Abertura do caixa </span>
+                <Box sx={{ mb: 2 }}>
+                </Box>  
                 </StepLabel>
-                <StepContent>
-                <Typography>{step.description}</Typography>
+        </Step>
+
+            {cashier.sales.map((sale) => (
+            <Step>
+                <StepLabel>
+                {sale.subtotal.toFixed(2)}
+                <br></br>
+                <p>{sale.paymentMethod?.name}</p>
                 <Box sx={{ mb: 2 }}>
                 </Box>
-                </StepContent>
+                </StepLabel>
             </Step>
             ))}
         </Stepper>

@@ -1,4 +1,5 @@
 import Cashier from "../dto/CashierDto";
+import Sale from "../dto/SaleDto";
 
 export default class CashierService {
     public static async getAll(): Promise<Cashier[]> {

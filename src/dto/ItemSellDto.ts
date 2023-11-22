@@ -2,7 +2,7 @@ import Product from "./ProductDto";
 import Sale from "./SaleDto";
 
 export default interface ItemSell {
-    id: number;
+    id?: number;
 
     sale?: Sale;
 

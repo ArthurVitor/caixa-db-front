@@ -1,14 +1,15 @@
 import Cashier from "../dto/CashierDto";
+import DateUtils from "../utils/DateUtils";
 
 export default class CashierService {
     public static async getAll(): Promise<Cashier[]> {
         return fetch (`http://localhost:8080/api/cashiers/all`).then(response => {
             if (response.ok) {
                 return response.json().then((cashiers) => 
-                cashiers.map((cashier: any) => ({
-                   ...cashier, 
-                   openDate: CashierService.getFormattedDate(cashier.openDate)
-                }))
+                    cashiers.map((cashier: any) => ({
+                    ...cashier, 
+                    openDate: DateUtils.getFormattedDateFromString(cashier.openDate)
+                    }))
                 );
             } else {
                 throw new Error("Erro service"); 
@@ -21,8 +22,8 @@ export default class CashierService {
             if(response.ok) {
                 return response.json().then((cashier) => ({ 
                     ...cashier, 
-                    openDate: CashierService.getFormattedDate(cashier.openDate)
-            }) 
+                    openDate: DateUtils.getFormattedDateFromString(cashier.openDate)
+                }) 
             );
             } else {
                 throw new Error(); 

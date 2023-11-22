@@ -1,11 +1,13 @@
+import CashierDto from "../dto/CashierDto";
 import Sale from "../dto/SaleDto";
+import DateUtils from "../utils/DateUtils";
 
 export default class SaleService {
   public static async getSales(page: number = 1, itemsPerPage: number = 20): Promise<Sale[]> {
     return fetch(`${import.meta.env.VITE_API_URL}/sales/?page=${page}&itemsPerPage=${itemsPerPage}`).then(response => {
       if (response.ok) {
         return response.json().then(sales => sales.map((sale: any) => {
-          return {...sale, saleDate: SaleService.getFormattedDate(sale.saleDate)}
+          return {...sale, saleDate: DateUtils.getFormattedDateFromString(sale.saleDate)}
         }));
       } else {
         return []
@@ -23,16 +25,40 @@ export default class SaleService {
     })
   }
 
-  public static getFormattedDate(string: string): Date {
-    if (!string) {
-      return new Date();
-    }
-    
-    let spaceSplit = string.split(" ");
-
-    let [day, month, year] = spaceSplit[0].split("/");
-    let [hour, minute, second] = spaceSplit[1].split(":");
-
-    return new Date(Number(year), Number(month), Number(day), Number(hour), Number(minute), Number(second));
+  public static async createSale(sale: Sale, cashierId: number): Promise<void> {
+    let date = new Date();
+    console.log(DateUtils.getFormattedDate(date) + " " + DateUtils.getFormattedTime(date))
+    fetch(`${import.meta.env.VITE_API_URL}/cashiers/addSale/${cashierId}`, {
+      // body: JSON.stringify({
+        // items: sale.items.map((item) => {
+        //   return {
+        //     ...item,
+        //     product: {
+        //       id: item.product?.id
+        //     }
+        //   }
+        // }),
+      //   paymentMethod: { id: sale.paymentMethod?.id },
+      //   paidAmount: sale.paidAmount,
+      //   change: sale.change
+      // }),
+      body: JSON.stringify({
+        items: sale.items.map((item) => {
+          return {
+            ...item,
+            product: {
+              id: item.product?.id
+            }
+          }
+        }),
+        saleDate: DateUtils.getFormattedDate(date) + " " + DateUtils.getFormattedTime(date),
+        paymentMethod: {id: sale.paymentMethod?.id},
+        paidAmount: sale.paidAmount,
+      }),
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((response) => response.json()).then((sale) => console.log(sale));
   }
 }

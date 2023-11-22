@@ -12,6 +12,7 @@ import TableRow from "@mui/material/TableRow";
 
 import Sale from "../../dto/SaleDto";
 import SaleService from "../../services/SaleService";
+import DateUtils from "../../utils/DateUtils";
 
 interface Column {
   id: "id" | "action" | "resume" | "type" | "date" | "hour" | "items";
@@ -56,6 +57,8 @@ export default function SaleTable() {
     });
   }, []);
 
+  useEffect(() => {}, [rowsPerPage, page]);
+
   return (
     <div style={{ height: "512px", width: "100%" }}>
       <Paper sx={{ width: "100%" }}>
@@ -77,28 +80,22 @@ export default function SaleTable() {
             <TableBody>
               {sales
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((sale) => {
+                .map((sale, index) => {
                   return (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={sale.id * Math.random()}>
+                    <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                       <TableCell key={"id"}>{sale.id}</TableCell>
                       <TableCell key={"resume"}>
-                        {(sale.paymentMethod?.name ?? "Dinheiro") +  " - R$ " + sale.subtotal.toFixed(2).replace(".", ",")}
+                        {(sale.paymentMethod?.name ?? "Dinheiro") +  " - R$ " + sale.subTotal!.toFixed(2).replace(".", ",")}
                       </TableCell>
                       <TableCell key={"type"}>Venda</TableCell>
                       <TableCell key={"date"}>
-                        {(sale.saleDate.getDay() < 10
-                          ? "0" + sale.saleDate.getDay()
-                          : sale.saleDate.getDay()) +
-                          "/" +
-                          sale.saleDate.getMonth() +
-                          "/" +
-                          sale.saleDate.getFullYear()}
+                        {DateUtils.getFormattedDate(sale.saleDate)}
                       </TableCell>
-                      <TableCell key={"hour"}>{(sale.saleDate.getHours() < 10 ? "0" + sale.saleDate.getHours() : sale.saleDate.getHours()) + ":" + (sale.saleDate.getMinutes() < 10 ? "0" + sale.saleDate.getMinutes() : sale.saleDate.getMinutes())}</TableCell>
+                      <TableCell key={"hour"}>{DateUtils.getFormattedTime(sale.saleDate)}</TableCell>
                       <TableCell key={"items"}>
                         {
-                          sale.items.map(item => {
-                            return <p key={item.id * Math.random()}>{item.quantity}x {item.product?.name}</p>
+                          sale.items.map((item, index) => {
+                            return <p key={index}>{item.quantity}x {item.product?.name}</p>
                           })
                         }
                       </TableCell>

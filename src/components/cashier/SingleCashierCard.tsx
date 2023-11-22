@@ -45,8 +45,7 @@ export default function BasicCard({cashier}: BasicCardProps ) {
       console.error('Erro ao fechar o caixa', error); 
     }
   };
-
-
+  
   return (
     <div style={{ display: 'flex', gap: '20vh' }}>
       <Card sx={{width: 450, height: 400, backgroundColor: "#FAFAF5", border: "2px solid #E6E6E6", borderRadius: 5 , display: 'flex', alignItems: 'center'}}>
@@ -60,6 +59,8 @@ export default function BasicCard({cashier}: BasicCardProps ) {
             <span style={{fontSize: 20, color: "#426B1F", fontWeight: 'bolder'}}>Sub Total: ${cashier.sales.reduce((acc, sales) => (acc + (sales.subtotal ?? 0)), 0).toFixed(2)}</span>
           </Typography>
           <Link to={`/vendas/${cashier.id}/criar-venda`}> <Button style={{marginTop:40}} className="custom-button-toggled">Adicionar venda</Button> </Link>
+            <span style={{fontSize: 20, color: "#426B1F", fontWeight: 'bolder'}}>Sub Total: ${cashier.sales.reduce((acc, sales) => (acc + (sales.subTotal ?? 0)), 0).toFixed(2)}</span>
+          </Typography>
         </CardContent>
       </Card>   
       <div className='verticalHr'></div>
@@ -72,7 +73,6 @@ export default function BasicCard({cashier}: BasicCardProps ) {
             <Step color ="#374151">
               <StepLabel>
                 <div className='divFlexCenter'>
-                 
                   <div className='divCircle firstCircle'></div>
                   <span style={{ fontFamily: "arial", fontSize: 16, marginBottom:'50px' }}>Abertura do caixa</span>
                 </div>
@@ -86,6 +86,7 @@ export default function BasicCard({cashier}: BasicCardProps ) {
                   <div className="divFlexCenter">
                   <div className="divCircle"></div>
                     {sale.subtotal?.toFixed(2)}
+                    {sale.subTotal?.toFixed(2)}
                   </div>
                   <div className='divLineHistory' />
                   <p>{sale.paymentMethod?.name}</p>
@@ -100,7 +101,6 @@ export default function BasicCard({cashier}: BasicCardProps ) {
           <div style={{height:'100px', color:'#374151', fontWeight:'bold', fontSize:'25px'}}>
             <span>Valor total: R${cashier.sales.reduce((acc, sales) => (acc + (sales.subtotal ?? 0)), 0).toFixed(2)}</span>
           </div>
-
          <Button style={{width:'400px'}} className="custom-button float-r" onClick={handleClick}>Fechar caixa</Button>
         </Box>
       </div>

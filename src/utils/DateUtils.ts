@@ -23,6 +23,8 @@ export default class DateUtils {
         if (!date)
             return "00:00:00";
 
-        return (date.getHours() < 10 ? "0" + date.getHours() : date.getHours()) + ":" + date.getMinutes() + ":" + date.getSeconds();
+        return (date.getHours() < 10 ? "0" + date.getHours() : date.getHours()) 
+            + ":" + (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()) +
+             ":" + (date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds());
     }
 }

@@ -7,9 +7,9 @@ import { ProductPage } from "./components/product/ProductPage";
 import { ItemSellPage } from "./components/itemsell/ItemSellPage";
 
 import "./App.css";
-import CashierDetailsPage from "./components/cashier/CashierDetailsPage";
-import CreateSalePage from "./components/sale/CreateSalePage";
 import CreateProductPage from "./components/product/CreateProductPage";
+import CreateSalePage from "./components/sale/create/CreateSalePage";
+import CashierDetailsPage from "./components/cashier/CashierDetailsPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(

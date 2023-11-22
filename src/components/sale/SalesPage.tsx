@@ -3,7 +3,7 @@ import SaleTable from "./SalesTable";
 export function SalesPage() {
   return (
     <div>
-      <p>Listando todos as vendas</p>
+      <p>Listando todas as vendas</p>
       <SaleTable/>
     </div>
   );

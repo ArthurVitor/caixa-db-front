@@ -1,16 +1,17 @@
-import { useState, useEffect } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import CashierService from '../../services/CashierService';
 import CashierDto from '../../dto/CashierDto';
+import 'react-toastify/dist/ReactToastify.css';
 
 import "./CashierCSS.css";
 
 import Stepper from '@mui/material/Stepper';
 import { palette, PaletteProps, spacing, SpacingProps } from '@mui/system';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { Button } from '@mui/material';
+import CashierService from '../../services/CashierService';
 
 
 interface BasicCardProps {
@@ -32,6 +33,19 @@ ${spacing}
 
 
 export default function BasicCard({cashier}: BasicCardProps ) {
+
+  const navigate = useNavigate();
+
+  const handleClick = async () => {
+    try {
+      await CashierService.closeCashier(cashier.id);
+      navigate('/caixas');
+    } 
+    catch (error) {
+      console.error('Erro ao fechar o caixa', error); 
+    }
+  };
+  
   return (
     <div style={{ display: 'flex', gap: '20vh' }}>
       <Card sx={{width: 450, height: 400, backgroundColor: "#FAFAF5", border: "2px solid #E6E6E6", borderRadius: 5 , display: 'flex', alignItems: 'center'}}>
@@ -42,6 +56,9 @@ export default function BasicCard({cashier}: BasicCardProps ) {
           <Typography variant="body2">
             <span style={{fontFamily: "arial", fontSize: 18}}>Aberto desde: {(cashier.openDate.getDay() < 10 ? "0" + cashier.openDate.getDay(): cashier.openDate.getDay()) +"/" + cashier.openDate.getMonth() +"/" + cashier.openDate.getFullYear()}</span>
             <br />
+            <span style={{fontSize: 20, color: "#426B1F", fontWeight: 'bolder'}}>Sub Total: ${cashier.sales.reduce((acc, sales) => (acc + (sales.subtotal ?? 0)), 0).toFixed(2)}</span>
+          </Typography>
+          <Link to={`/vendas/${cashier.id}/criar-venda`}> <Button style={{marginTop:40}} className="custom-button-toggled">Adicionar venda</Button> </Link>
             <span style={{fontSize: 20, color: "#426B1F", fontWeight: 'bolder'}}>Sub Total: ${cashier.sales.reduce((acc, sales) => (acc + (sales.subTotal ?? 0)), 0).toFixed(2)}</span>
           </Typography>
         </CardContent>
@@ -68,6 +85,7 @@ export default function BasicCard({cashier}: BasicCardProps ) {
                   <StepLabel color ="#374151">
                   <div className="divFlexCenter">
                   <div className="divCircle"></div>
+                    {sale.subtotal?.toFixed(2)}
                     {sale.subTotal?.toFixed(2)}
                   </div>
                   <div className='divLineHistory' />
@@ -79,6 +97,11 @@ export default function BasicCard({cashier}: BasicCardProps ) {
             </Link>
             ))}
           </Stepper>
+          <br></br>
+          <div style={{height:'100px', color:'#374151', fontWeight:'bold', fontSize:'25px'}}>
+            <span>Valor total: R${cashier.sales.reduce((acc, sales) => (acc + (sales.subtotal ?? 0)), 0).toFixed(2)}</span>
+          </div>
+         <Button style={{width:'400px'}} className="custom-button float-r" onClick={handleClick}>Fechar caixa</Button>
         </Box>
       </div>
      </div>

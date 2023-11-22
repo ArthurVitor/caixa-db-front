@@ -31,9 +31,11 @@ ${palette}
 ${spacing}
 `
 
+
 export default function BasicCard({cashier}: BasicCardProps ) {
 
   const [subTotal, setSubTotal] = useState(0);
+
 
   useEffect(() => {
     const fetchSubTotal = async () => {
@@ -100,6 +102,7 @@ export default function BasicCard({cashier}: BasicCardProps ) {
               </Link>
               ))}
           </Stepper>
+          <Link to={`/caixas`}> <Button style={{marginTop:40}} className="custom-button-toggled">Fechar caixa</Button> </Link>
       </Box>
       </div>
      </div>

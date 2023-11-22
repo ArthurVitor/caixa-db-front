@@ -52,6 +52,17 @@ export default class CashierService {
         });
     }
 
+    public static async closeCashier(id:number):Promise<void> {
+        return fetch(`http://localhost:8080/api/cashiers/close/${id}`).then(response => {
+            if(response.ok) {
+                return response.json();
+            } else {
+                console.error('Erro ao fechar o caixa:',response.statusText);
+                throw new Error("Erro service"); 
+            }
+        });
+    }
+
 
     public static getFormattedDate(string: string): Date {
         let spaceSplit = string.split(" ");

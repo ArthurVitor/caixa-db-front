@@ -6,7 +6,18 @@ export default class ProductService {
       response.json()
     )
     .catch(err => 
-        console.log(err)
+        console.error(err)
     );
+  }
+
+  public static async createProduct(product: object): Promise<Product> {
+    const data: string = JSON.stringify(product)
+    return fetch("http://localhost:8080/api/product", {
+      method: "POST",
+      body: data,
+      headers: { "Content-type": "application/json" }
+    })
+    .then(response => response.json())
+    .catch(err => console.error(err))
   }
 }

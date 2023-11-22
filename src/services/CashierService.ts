@@ -1,4 +1,5 @@
 import Cashier from "../dto/CashierDto";
+import Sale from "../dto/SaleDto";
 
 export default class CashierService {
     public static async getAll(): Promise<Cashier[]> {
@@ -19,7 +20,11 @@ export default class CashierService {
     public static async getById(id: number): Promise<Cashier> {
         return fetch(`http://localhost:8080/api/cashiers/${id}`).then(response => {
             if(response.ok) {
-                return response.json();
+                return response.json().then((cashier) => ({ 
+                    ...cashier, 
+                    openDate: CashierService.getFormattedDate(cashier.openDate)
+            }) 
+            );
             } else {
                 throw new Error(); 
             }

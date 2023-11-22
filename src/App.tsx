@@ -7,15 +7,15 @@ import { ProductPage } from "./components/product/ProductPage";
 import { ItemSellPage } from "./components/itemsell/ItemSellPage";
 
 import "./App.css";
+import CashierDetailsPage from "./components/cashier/CashierDetailsPage";
 import CreateSalePage from "./components/sale/CreateSalePage";
 import CreateProductPage from "./components/product/CreateProductPage";
-import ViewCashierPage from "./components/cashier/ViewCashierPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootPage />}>
       <Route path="/caixas" element={<CashierPage />} />
-      <Route path="/caixas/:id/visualizar/" element={<ViewCashierPage />} />
+      <Route path="/caixas/:id" element={<CashierDetailsPage />} />
       <Route path="/vendas" element={<SalesPage />} />
       <Route path="/vendas/:id/criar-venda" element={<CreateSalePage />} />
       <Route path="/produtos" element={<ProductPage />} />

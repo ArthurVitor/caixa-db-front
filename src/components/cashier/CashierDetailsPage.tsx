@@ -1,16 +1,15 @@
 import { useState, useEffect } from 'react';
-import CashierCard from "./CashierCard";
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import ToggleButton from "./ToggleButtons";
 import CashierService from '../../services/CashierService';
 import CashierDto from '../../dto/CashierDto';
-import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import SingleCashierCard from './SingleCashierCard';
+interface CashierDetailsPageProps {}
 
-
-export function CashierPage() {
-
-  const [cashiers, setCashiers] = useState<CashierDto[]>([]);
+const CashierDetailsPage: React.FC<CashierDetailsPageProps> = () => {
+  const { id } = useParams<{ id: string }>();
+  const [cashier, setCashier] = useState<CashierDto | null>(null);
 
   const cardContainerStyle = {
     height: '100%', // Define a altura para 100% do contêiner pai
@@ -21,35 +20,30 @@ export function CashierPage() {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchCashierDetails = async () => {
       try {
-        const allCashiers = await CashierService.getAll();
-        setCashiers(allCashiers);
+        const cashierDetails = await CashierService.getById(Number(id));
+        setCashier(cashierDetails);
       } catch (error) {
-        console.error('Erro ao obter dados dos caixas:', error);
+        console.error('Erro ao obter detalhes do caixa:', error);
       }
     };
 
-    fetchData();
-  }, []);
-
+    fetchCashierDetails();
+  }, [id]);
+  
   return (
     <>
-    
-    <ToggleButton/>
     <Box sx={{ flexGrow: 1 }}>
-      <Grid container spacing={2}>
         {/* No modo mobile (xs), cada item ocupará 12 colunas */}
-        {cashiers.map((cashier) => (
-        <Grid item xs={12} sm={6} md={4} key={cashier.id}>
+        <Grid item xs={12} sm={6} md={4}>
           <div style={cardContainerStyle}>
-          <Link to={`/caixas/${cashier.id}`}> <CashierCard cashier={cashier}/></Link>
+          {cashier ? <SingleCashierCard cashier={cashier} /> : <p>Carregando...</p>}
           </div>
-        </Grid>
-        ))}
       </Grid>
     </Box>
     </>
-    
   );
-}
+};
+
+export default CashierDetailsPage;

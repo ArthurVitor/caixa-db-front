@@ -34,7 +34,7 @@ export default function BasicCard({cashier}: BasicCardProps ) {
           Caixa  {`${cashier.id}`}
         </Typography>
         <Typography variant="body2">
-          <span style={{fontSize: 20, color: "#426B1F", fontWeight: 'bolder'}}>Sub Total: ${subTotal}</span>
+          <span style={{fontSize: 20, color: "#426B1F", fontWeight: 'bolder'}}>Sub Total: ${subTotal.toFixed(2)}</span>
           <br />
           <span style={{fontFamily: "arial", fontSize: 18}}>Aberto desde: {(cashier.openDate.getDay() < 10 ? "0" + cashier.openDate.getDay(): cashier.openDate.getDay()) +"/" + cashier.openDate.getMonth() +"/" + cashier.openDate.getFullYear()}</span>
         </Typography>

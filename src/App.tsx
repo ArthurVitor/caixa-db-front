@@ -18,7 +18,7 @@ const router = createBrowserRouter(
     <Route path="/" element={<RootPage />}>
       <Route path="/caixas/:parametroBooleano" element={<CashierPage />} />
       <Route path="/caixas" element={<CashierPage />} />
-      <Route path="/caixas/:id" element={<CashierDetailsPage />} />
+      <Route path="/caixas/:parametroBooleano/:id" element={<CashierDetailsPage />} />
       <Route path="/vendas" element={<SalesPage />} />
       <Route path="/vendas/:id" element={<SalesDetailsPage />} />
       <Route path="/vendas/:id/criar-venda" element={<CreateSalePage />} />

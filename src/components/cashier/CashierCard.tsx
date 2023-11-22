@@ -4,6 +4,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CashierService from '../../services/CashierService';
 import CashierDto from '../../dto/CashierDto';
+import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 
 interface BasicCardProps {
   cashier: CashierDto;
@@ -34,6 +35,7 @@ export default function BasicCard({cashier}: BasicCardProps ) {
       <CardContent>
         <Typography sx={{ fontSize: 20, marginBottom:15, fontFamily:'arial', fontWeight: 400, color: "#374151" }} color="text.secondary" gutterBottom>
           Caixa  {`${cashier.id}`}
+          <InfoRoundedIcon style={{float:"right"}} />
         </Typography>
         <Typography variant="body2">
           <span style={{fontSize: 20, color: "#426B1F", fontWeight: 'bolder'}}>Sub Total: ${subTotal}</span>

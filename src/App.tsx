@@ -11,7 +11,7 @@ import "./App.css";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootPage />}>
-      <Route path="/caixas" element={<CashierPage />} />
+      <Route path="/caixas/:parametroBooleano" element={<CashierPage />} />
       <Route path="/vendas" element={<SalesPage />} />
       <Route path="/produtos" element={<ProductPage />} />
       <Route path="/itemsell" element={<ItemSellPage />} />

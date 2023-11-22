@@ -136,7 +136,7 @@ export default function MiniDrawer() {
         <Divider />
         <List>
             <ListItem key={1} disablePadding sx={{ display: 'block' }}>
-              <Link to={"/caixas"} style={{ textDecoration: 'none', color: 'inherit' }}>
+              <Link to={"/caixas/true"} style={{ textDecoration: 'none', color: 'inherit' }}>
                 <ListItemButton sx={{minHeight: 48, justifyContent: open ? 'initial' : 'center', px: 2.5,}}>
                   <ListItemIcon sx={{minWidth: 0, mr: open ? 3 : 'auto', justifyContent: 'center',}}>
                     <AccountBalanceRoundedIcon/>

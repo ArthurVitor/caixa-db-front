@@ -3,7 +3,7 @@ import SaleDto from './SaleDto';
 export default interface CashierDto {
     id: number, 
 
-    isOpen: boolean;
+    open: boolean;
 
     openDate: Date;
 

@@ -3,5 +3,5 @@ export default interface Product {
     name: string;
     price: number;
     barcode: string;
-    discontinuationdate: Date;
+    discontinuationdate: string;
 } 

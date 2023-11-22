@@ -7,6 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import Product from '../../dto/ProductDto';
 
 interface Column {
   id: 'id' | 'name' | 'price' | 'barcode' | 'discontinuationdate';
@@ -23,7 +24,7 @@ const columns: Column[] = [
     id: 'price',
     label: 'Price',
     minWidth: 170,
-    format: (value: number) => value.toLocaleString('en-US'),
+    format: (value: number) => `R$ ${value.toFixed(2)}`,
   },
   {
     id: 'barcode',
@@ -57,7 +58,7 @@ function createData(
   return { id, name, price, barcode, discontinuationdate };
 }
 
-export default function ColumnGroupingTable(props: { productList: object[] }) {
+export default function ColumnGroupingTable(props: { productList: Product[] }) {
 
   const rows: object[] = [];
 

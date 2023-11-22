@@ -1,12 +1,10 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 import { Grid, Paper, Table, TableBody, TableCell, TableContainer, TableRow, Button } from "@mui/material";
 
 import Sale from "../../dto/SaleDto";
 import SaleService from "../../services/SaleService";
-import QuantityAmountButton from "./templates/QuantityAmountButton";
-import ItemSell from "../../dto/ItemSellDto";
 import TableTemplate, { Column } from "./templates/TableTemplate";
   
 const columns: Column[] = [
@@ -21,6 +19,7 @@ export default function SalesDetailsPage() {
 
     const [loading, setLoading] = useState(true);
     const [sale, setSale] = useState<Sale>({});
+    const nagivate = useNavigate();
 
     if (isNaN(id)) {
         return (
@@ -38,23 +37,12 @@ export default function SalesDetailsPage() {
 
     useEffect(() => {}, [sale?.items])
 
-    const handleQuantityItem = (event: React.MouseEvent, item: ItemSell, action: "+" | "-") => {
-        if (action === "+") {
-            item.quantity++;
-            setSale({...sale});
-        } else {
-            if (item.quantity > 1 && !event.shiftKey) {
-                item.quantity--;
-                setSale({...sale});
-            } else {
-                const index = sale.items!.findIndex((i) => i.id === item.id) ?? -1;
+    const handleDeleteSale = (event: React.MouseEvent) => {
+        event.preventDefault();
 
-                if (index >= 0) {
-                    sale.items!.splice(index, 1);
-                    setSale({...sale});
-                }
-            }
-        }
+        SaleService.deleteSaleById(id).then(() => {
+            nagivate("/vendas/");
+        });
     }
 
     if (loading) {
@@ -64,7 +52,7 @@ export default function SalesDetailsPage() {
     return (
         <Grid container spacing={2} style={{margin: "2px", padding: "2px", display: "flex", alignItems: "center", justifyContent:"center", flexDirection: "column"}}>
             <h1 style={{margin: "0px"}}>Pedido número #{id}</h1>
-            <Button variant="contained" color="error" style={{marginRight: "15px"}}>DELETAR VENDA</Button>
+            <Button variant="contained" color="error" style={{marginRight: "15px"}} onClick={handleDeleteSale}>DELETAR VENDA</Button>
             <h3 style={{marginTop: "30px"}}>Items do pedido</h3>
             <Paper>
                 <TableContainer sx={{ maxHeight: "100%" }}>

@@ -25,25 +25,18 @@ export default class SaleService {
     })
   }
 
+  public static async deleteSaleById(id: number): Promise<void> {
+    fetch(`${import.meta.env.VITE_API_URL}/sales/${id}`, {
+      method: "DELETE",
+    });
+  }
+
   public static async createSale(sale: Sale, cashierId: number): Promise<void> {
     let date = new Date();
     console.log(DateUtils.getFormattedDate(date) + " " + DateUtils.getFormattedTime(date))
     fetch(`${import.meta.env.VITE_API_URL}/cashiers/addSale/${cashierId}`, {
-      // body: JSON.stringify({
-        // items: sale.items.map((item) => {
-        //   return {
-        //     ...item,
-        //     product: {
-        //       id: item.product?.id
-        //     }
-        //   }
-        // }),
-      //   paymentMethod: { id: sale.paymentMethod?.id },
-      //   paidAmount: sale.paidAmount,
-      //   change: sale.change
-      // }),
       body: JSON.stringify({
-        items: sale.items.map((item) => {
+        items: sale.items?.map((item) => {
           return {
             ...item,
             product: {

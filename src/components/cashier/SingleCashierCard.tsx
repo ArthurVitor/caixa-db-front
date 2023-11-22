@@ -44,7 +44,7 @@ export default function BasicCard({cashier}: BasicCardProps ) {
         <Typography variant="body2">
           <span style={{fontFamily: "arial", fontSize: 18}}>Aberto desde: {(cashier.openDate.getDay() < 10 ? "0" + cashier.openDate.getDay(): cashier.openDate.getDay()) +"/" + cashier.openDate.getMonth() +"/" + cashier.openDate.getFullYear()}</span>
           <br />
-          <span style={{fontSize: 20, color: "#426B1F", fontWeight: 'bolder'}}>Sub Total: ${subTotal.toFixed(2)}</span>
+          <span style={{fontSize: 20, color: "#426B1F", fontWeight: 'bolder'}}>Subtotal: R$ {subTotal.toFixed(2).replace(".", ",")}</span>
         </Typography>
       </CardContent>
     </Card>
@@ -79,7 +79,7 @@ export default function BasicCard({cashier}: BasicCardProps ) {
             {cashier.sales.map((sale) => (
             <Step>
                 <StepLabel>
-                {sale.subTotal?.toFixed(2)}
+                R$ {sale.subTotal?.toFixed(2).replace(".", ",")}
                 <br></br>
                 <p>{sale.paymentMethod?.name}</p>
                 <Box sx={{ mb: 2 }}>

@@ -47,7 +47,9 @@ export default class ProductService {
   }
 
   public static async deleteProduct(id: number): Promise<number | void> {
-    return fetch(`http://localhost:8080/api/product/${id}`).then(response =>
+    return fetch(`http://localhost:8080/api/product/${id}`, {
+      method: "DELETE"
+    }).then(response =>
       response.status
     )
     .catch(err => console.error(err))

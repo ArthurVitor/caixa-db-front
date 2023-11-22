@@ -1,15 +1,15 @@
 import Cashier from "../dto/CashierDto";
-import Sale from "../dto/SaleDto";
+import DateUtils from "../utils/DateUtils";
 
 export default class CashierService {
     public static async getAll(): Promise<Cashier[]> {
         return fetch (`http://localhost:8080/api/cashiers/all`).then(response => {
             if (response.ok) {
                 return response.json().then((cashiers) => 
-                cashiers.map((cashier: any) => ({
-                   ...cashier, 
-                   openDate: CashierService.getFormattedDate(cashier.openDate)
-                }))
+                    cashiers.map((cashier: any) => ({
+                    ...cashier, 
+                    openDate: DateUtils.getFormattedDateFromString(cashier.openDate)
+                    }))
                 );
             } else {
                 throw new Error("Erro service"); 
@@ -22,8 +22,8 @@ export default class CashierService {
             if(response.ok) {
                 return response.json().then((cashier) => ({ 
                     ...cashier, 
-                    openDate: CashierService.getFormattedDate(cashier.openDate)
-            }) 
+                    openDate: DateUtils.getFormattedDateFromString(cashier.openDate)
+                }) 
             );
             } else {
                 throw new Error(); 
@@ -41,6 +41,7 @@ export default class CashierService {
         });
     }
     
+<<<<<<< HEAD
     public static async getTotal(id: number):Promise<number> {
         return fetch(`http://localhost:8080/api/cashiers/totalSales/${id}`).then(response => {
             if(response.ok) {
@@ -73,4 +74,6 @@ export default class CashierService {
         return new Date(Number(year), Number(month), Number(day), Number(hour), Number(minute), Number(second));
       }
     
+=======
+>>>>>>> 87bcbb0dd1e0f6add7be4d3e40f830516cd3ef7e
 }

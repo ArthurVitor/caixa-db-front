@@ -5,16 +5,30 @@ import Typography from '@mui/material/Typography';
 import CashierService from '../../services/CashierService';
 import CashierDto from '../../dto/CashierDto';
 
-import Box from '@mui/material/Box';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
+import "./CashierCSS.css";
 
+import Stepper from '@mui/material/Stepper';
+import { palette, PaletteProps, spacing, SpacingProps } from '@mui/system';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 
 interface BasicCardProps {
     cashier: CashierDto;
   }
+
+const Step = styled.div<PaletteProps & SpacingProps>`
+${palette}
+`;
+
+const StepLabel = styled.div<PaletteProps>`
+${palette}
+`
+
+const Box = styled.div<PaletteProps & SpacingProps>`
+${palette}
+${spacing}
+`
 
 
 export default function BasicCard({cashier}: BasicCardProps ) {
@@ -47,52 +61,42 @@ export default function BasicCard({cashier}: BasicCardProps ) {
           <span style={{fontSize: 20, color: "#426B1F", fontWeight: 'bolder'}}>Sub Total: ${subTotal.toFixed(2)}</span>
         </Typography>
       </CardContent>
-    </Card>
-
-        <div
-            style={{
-            borderLeft: '2px solid #E6E6E6', 
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: '90vh',
-            }}
-        ></div>
-
+    </Card>   
+        <div className='verticalHr'></div>
     <div style={{width: 400, height: 'auto', border:'none', display: 'flex', alignItems: 'center'}}>
-       <Box sx={{ maxWidth: 400 }}>
-
-        <div>
+       <Box p={4}>
+        <div style={{height:'100px', color:'#374151', fontWeight:'bold', fontSize:'20px'}}>
             Movimentação
         </div>
-
-
         <Stepper orientation="vertical">
-             <Step>
-                <StepLabel>
-                <span style={{fontFamily: "arial", fontSize: 18}}>Abertura do caixa </span>
-                <Box sx={{ mb: 2 }}>
-                </Box>  
-                </StepLabel>
+        <Step color ="#374151">
+          <StepLabel>
+            <div className='divFlexCenter'>
+              <div className='divCircle firstCircle'></div>
+              <span style={{ fontFamily: "arial", fontSize: 16, marginBottom:'50px' }}>Abertura do caixa</span>
+            </div>
+            <Box p={2}></Box>
+          </StepLabel>
         </Step>
-
-            {cashier.sales.map((sale) => (
-            <Step>
-                <StepLabel>
-                {sale.subtotal.toFixed(2)}
-                <br></br>
-                <p>{sale.paymentMethod?.name}</p>
-                <Box sx={{ mb: 2 }}>
-                </Box>
-                </StepLabel>
-            </Step>
+            {cashier.sales.map((sale) => ( 
+              <Link to={`/vendas/${sale.id}`}>
+                <Step color ="#374151">
+                  <StepLabel color ="#374151">
+                  <div className="divFlexCenter">
+                  <div className="divCircle"></div>
+                    {sale.subtotal.toFixed(2)}
+                  </div>
+                  <div className='divLineHistory' />
+                  <p>{sale.paymentMethod?.name}</p>
+                  <Box p={2}>
+                  </Box>
+                  </StepLabel>
+              </Step>
+            </Link>
             ))}
         </Stepper>
     </Box>
     </div>
      </div>
-
   );
-
-
 }

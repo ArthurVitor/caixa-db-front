@@ -9,6 +9,7 @@ import { ItemSellPage } from "./components/itemsell/ItemSellPage";
 import "./App.css";
 import CashierDetailsPage from "./components/cashier/CashierDetailsPage";
 import CreateSalePage from "./components/sale/CreateSalePage";
+import SalesDetailsPage from "./components/sale/SalesDetailsPage";
 import CreateProductPage from "./components/product/CreateProductPage";
 
 const router = createBrowserRouter(
@@ -17,6 +18,7 @@ const router = createBrowserRouter(
       <Route path="/caixas" element={<CashierPage />} />
       <Route path="/caixas/:id" element={<CashierDetailsPage />} />
       <Route path="/vendas" element={<SalesPage />} />
+      <Route path="/vendas/:id" element={<SalesDetailsPage />} />
       <Route path="/vendas/:id/criar-venda" element={<CreateSalePage />} />
       <Route path="/produtos" element={<ProductPage />} />
       <Route path="/produtos/criar-produto" element={<CreateProductPage />} />

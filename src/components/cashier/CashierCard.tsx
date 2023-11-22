@@ -1,8 +1,6 @@
-import { useState, useEffect } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import CashierService from '../../services/CashierService';
 import CashierDto from '../../dto/CashierDto';
 import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 

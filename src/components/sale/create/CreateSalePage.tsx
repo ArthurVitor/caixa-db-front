@@ -27,6 +27,7 @@ import PaymentMethodService from "../../../services/PaymentMethodService";
 
 import './style.css'
 import SaleService from "../../../services/SaleService";
+import QuantityAmountButton from "../templates/QuantityAmountButton";
 
 interface Column {
     id: "product" | "quantity" | "unit-price" | "total-price";
@@ -142,7 +143,7 @@ export default function CreateSalePage() {
                                 align={column.align}
                                 style={{ top: 57, minWidth: column.minWidth }}
                             >
-                                {column.label}
+                            {column.label}
                             </TableCell>
                             ))}
                         </TableRow>
@@ -153,20 +154,13 @@ export default function CreateSalePage() {
                                     <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                                         <TableCell key={"product"}>{item.product?.name}</TableCell>
                                         <TableCell key={"quantity"} style={{padding: "20px"}}>
-                                            <button style={{marginRight: "7px"}} 
-                                            onClick={() => {
+                                            <QuantityAmountButton quantity={item.quantity} onClickMinus={() => {
                                                     item.quantity -= 1; if (item.quantity <= 0) {
                                                     setItems([...items.filter((_, i) => i !== index)]);
                                                 } else {
                                                     setItems([...items]);
                                                 }
-                                            }}>
-                                                -
-                                            </button>
-                                            {item.quantity}
-                                            <button style={{marginLeft: "7px"}} onClick={() => {item.quantity += 1; setItems([...items])}}>
-                                                +
-                                            </button>
+                                            }} onClickPlus={() => {item.quantity += 1; setItems([...items])}} />
                                         </TableCell>
                                         <TableCell key={"unit-price"}>R$ {item.product?.price.toFixed(2).replace(".", ",")}</TableCell>
                                         <TableCell key={"total-price"}>R$ {(item.product!.price * item.quantity).toFixed(2).replace(".", ",")}</TableCell>

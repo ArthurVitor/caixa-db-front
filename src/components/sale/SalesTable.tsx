@@ -6,24 +6,18 @@ import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 
 import Sale from "../../dto/SaleDto";
 import SaleService from "../../services/SaleService";
 import DateUtils from "../../utils/DateUtils";
-
-interface Column {
-  id: "id" | "action" | "resume" | "type" | "date" | "hour" | "items";
-  label: string;
-  minWidth?: number;
-  align?: "right";
-  format?: (value: number) => string;
-}
+import { Button } from "@mui/material";
+import TableTemplate, { Column } from "./templates/TableTemplate";
 
 const columns: Column[] = [
   { id: "id", label: "Número", minWidth: 70 },
+  { id: "action", label: "Ação", minWidth: 70},
   { id: "resume", label: "Resumo", minWidth: 200 },
   { id: "type", label: "Tipo", minWidth: 90 },
   { id: "date", label: "Data", minWidth: 130 },
@@ -64,19 +58,7 @@ export default function SaleTable() {
       <Paper sx={{ width: "100%" }}>
         <TableContainer sx={{ maxHeight: "100%" }}>
           <Table>
-            <TableHead>
-              <TableRow>
-                {columns.map((column) => (
-                  <TableCell
-                    key={column.id}
-                    align={column.align}
-                    style={{ top: 57, minWidth: column.minWidth }}
-                  >
-                    {column.label}
-                  </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
+            <TableTemplate columns={columns}/>
             <TableBody>
               {sales
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -84,6 +66,7 @@ export default function SaleTable() {
                   return (
                     <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                       <TableCell key={"id"}>{sale.id}</TableCell>
+                      <TableCell key="action"><Button component={Link} to={"/vendas/" + sale.id} variant="contained">Editar</Button></TableCell>
                       <TableCell key={"resume"}>
                         {(sale.paymentMethod?.name ?? "Dinheiro") +  " - R$ " + sale.subTotal!.toFixed(2).replace(".", ",")}
                       </TableCell>
@@ -94,7 +77,7 @@ export default function SaleTable() {
                       <TableCell key={"hour"}>{DateUtils.getFormattedTime(sale.saleDate)}</TableCell>
                       <TableCell key={"items"}>
                         {
-                          sale.items.map((item, index) => {
+                          sale.items!.map((item, index) => {
                             return <p key={index}>{item.quantity}x {item.product?.name}</p>
                           })
                         }

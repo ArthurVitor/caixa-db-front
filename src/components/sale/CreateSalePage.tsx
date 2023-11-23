@@ -62,14 +62,26 @@ export default function CreateSalePage() {
     const nagivate = useNavigate();
 
     const handleSubmit = (event: React.MouseEvent) => {
-        if (!cashier || !paymentMethod || !items.length) {
+        if (items.length === 0) {
+            alert("Adicione pelo menos um item!");
+            return;
+        }
+
+        if (!paymentMethod) {
+            alert("Selecione um método de pagamento!");
+            return;
+        }
+
+        if (paidAmount < items.reduce((acc, item) => acc + item.product!.price * item.quantity, 0)) {
+            alert("O valor pago é menor que o valor total!");
             return;
         }
 
         SaleService.createSale({
             paymentMethod: paymentMethod!,
             items,
-            paidAmount
+            paidAmount,
+            change: Math.max(0, paidAmount - items.reduce((acc, item) => acc + item.product!.price * item.quantity, 0))
         }, cashier!.id).then(() => nagivate("/caixas/" + cashier!.id));
     }
 
@@ -142,7 +154,7 @@ export default function CreateSalePage() {
             </Grid>
             <Grid item xs={12} md={8} mt={2}>
                 <h3>Total: R$ {items.reduce((acc, item) => acc + item.product!.price * item.quantity, 0).toFixed(2).replace(".", ",")}</h3>
-                <h3>Troco: R$ {items.reduce((acc, item) => acc + item.product!.price * item.quantity, 0).toFixed(2).replace(".", ",")}</h3>
+                <h3>Troco: R$ {Math.max(0, paidAmount - items.reduce((acc, item) => acc + item.product!.price * item.quantity, 0)).toFixed(2).replace(".", ",")}</h3>
                 <FormControl sx={{ m: 1, width: '100%', flexDirection: "row" }}>
                     <Autocomplete
                     style={{width: "20%", marginRight: "20px", marginTop:"10px", marginBottom: "20px"}}

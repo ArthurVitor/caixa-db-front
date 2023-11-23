@@ -18,7 +18,6 @@ const columns: Column[] = [
 ];
 
 function transformItemSellToItems(items: ItemSell[]) {
-    console.log('L', items)
     return items.map((item) => (
         {
             data: [
@@ -57,7 +56,6 @@ export default function ViewSalesDetailsPage() {
         SaleService.getSaleById(id).then((sale) => {
             setSale(sale);
             setLoading(false);
-            console.log(sale);
         });
     }, []);
 
@@ -66,7 +64,7 @@ export default function ViewSalesDetailsPage() {
     const handleDeleteSale = (event: React.MouseEvent) => {
         event.preventDefault();
 
-        SaleService.deleteSaleById(id).then(() => nagivate("/vendas/"));
+        SaleService.deleteSaleById(id).then(() => nagivate("/vendas/")).catch((error) => console.log(error));
     }
 
     if (loading) {

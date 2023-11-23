@@ -33,7 +33,12 @@ function transformSalesToItems(sales: Sale[]) {
           key: "action", value: (<Button component={Link} to={"/vendas/" + sale.id} variant="contained">Editar</Button>)
         },
         {
-          key: "resume", value: (sale.paymentMethod?.name ?? "Dinheiro") +  " - R$ " + sale.subTotal!.toFixed(2).replace(".", ",")
+          key: "resume", value: (
+            <div>
+              <p>Total: R$ {sale.subTotal!.toFixed(2).replace(".", ",")}</p>
+              <p>Pago: R$ {(sale.subTotal! + sale.change!).toFixed(2).replace(".", ",") + " (" + (sale.paymentMethod?.name ?? "Dinheiro") + ")"}</p>
+            </div>
+          )
         },
         {
           key: "type", value: "Venda"

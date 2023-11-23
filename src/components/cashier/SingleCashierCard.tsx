@@ -9,16 +9,16 @@ import Stepper from '@mui/material/Stepper';
 import { palette, PaletteProps, spacing, SpacingProps } from '@mui/system';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
-import { Button } from '@mui/material';
+import { Button} from '@mui/material';
 import CashierService from '../../services/CashierService';
 
 interface BasicCardProps {
   cashier: CashierDto;
 }
 
-const Step = styled.div<PaletteProps & SpacingProps>`
+const Step = styled.div<PaletteProps>`
   ${palette}
-`;
+`; 
 
 const StepLabel = styled.div<PaletteProps>`
   ${palette}
@@ -60,37 +60,28 @@ export default function BasicCard({ cashier }: BasicCardProps) {
       </Card>
       <div className='verticalHr'></div>
       <div style={{ width: 400, height: 'auto', border: 'none', display: 'flex', alignItems: 'center' }}>
-        <Box p={4}>
-          <div style={{ height: '100px', color: '#374151', fontWeight: 'bold', fontSize: '20px' }}>
+        <Box p={4} >
+          <div style={{ height: '50px', color: '#374151', fontWeight: 'bold', fontSize: '20px' }}>
             Movimentação
           </div>
+          <div style={{overflowY: 'scroll', maxHeight:'400px', scrollbarWidth: 'none' }}>
           <Stepper orientation="vertical">
-            <Step color="#374151">
-              <StepLabel>
-                <div className='divFlexCenter'>
-                  <div className='divCircle firstCircle'></div>
-                  <span style={{ fontFamily: "arial", fontSize: 16, marginBottom: '50px' }}>Abertura do caixa</span>
-                </div>
-                <Box p={2}></Box>
-              </StepLabel>
-            </Step>
             {cashier.sales.map((sale) => (
               <Link to={`/vendas/${sale.id}`} style={{ textDecoration: "none" }} key={sale.id}>
                 <Step color="#374151">
-                  <StepLabel color="#374151">
+                  <StepLabel>
+                   <div className='divLineHistory' />
                     <div className="divFlexCenter">
                       <div className="divCircle"></div>
                       {sale.subTotal?.toFixed(2)}
                     </div>
-                    <div className='divLineHistory' />
                     <p>{sale.paymentMethod?.name}</p>
-                    <Box p={2}>
-                    </Box>
                   </StepLabel>
                 </Step>
               </Link>
             ))}
           </Stepper>
+          </div>
           <br></br>
           <div style={{ height: '100px', color: '#374151', fontWeight: 'bold', fontSize: '25px' }}>
             <span>Valor total: R${cashier.sales.reduce((acc, sales) => (acc + (sales.subTotal ?? 0)), 0).toFixed(2)}</span>

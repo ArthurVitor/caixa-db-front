@@ -1,6 +1,4 @@
-import TableCell from "@mui/material/TableCell";
-import TableRow from "@mui/material/TableRow";
-import TableHead from "@mui/material/TableHead";
+import { TableCell, TableRow, TableHead } from "@mui/material";
 
 interface Column {
     id: string;
@@ -18,7 +16,7 @@ export type {
     Column
 }
 
-export default function TableTemplate({ columns }: TableTemplateProps) {
+export default function TablePreview({ columns }: TableTemplateProps) {
     return (
         <TableHead>
               <TableRow>

@@ -16,6 +16,8 @@ import ItemSell from "../../dto/ItemSellDto";
 import PaymentMethod from "../../dto/PaymentMethodDto";
 import TablePreview, { Column } from "./templates/TablePreview";
 import TableRows from "./templates/TableRows";
+import StringUtils from "../../utils/StringUtils";
+import CurrencyInput from "./templates/CurrencyInput";
 
 const columns: Column[] = [
     { id: "product", label: "Produto", minWidth: 70 },
@@ -24,15 +26,21 @@ const columns: Column[] = [
     { id: "totalPrice", label: "Preço total", minWidth: 70 },
 ];
 
-function transformItemSellToItems(items: ItemSell[]) {
-    return items.map((item) => (
+function transformItemSellToItems(items: ItemSell[], setItems: (items: ItemSell[]) => void) {
+    return items.map((item, index) => (
         {
             data: [
                 {
                     key: "product", value: item.product!.name
                 },
                 {
-                    key: "quantity", value: item.quantity.toString()
+                    key: "quantity", value: (<QuantityAmountButton quantity={item.quantity} onClickMinus={() => {
+                        item.quantity -= 1; if (item.quantity <= 0) {
+                            setItems([...items.filter((_, i) => i !== index)]);
+                        } else {
+                            setItems([...items]);
+                        }
+                    }} onClickPlus={() => {item.quantity += 1; setItems([...items])}} />)
                 },
                 {
                     key: "unitPrice", value: "R$ " + item.product!.price.toFixed(2).replace(".", ",")
@@ -61,7 +69,7 @@ export default function CreateSalePage() {
 
     const nagivate = useNavigate();
 
-    const handleSubmit = (event: React.MouseEvent) => {
+    const handleSubmit = () => {
         if (items.length === 0) {
             alert("Adicione pelo menos um item!");
             return;
@@ -72,17 +80,19 @@ export default function CreateSalePage() {
             return;
         }
 
-        if (paidAmount < items.reduce((acc, item) => acc + item.product!.price * item.quantity, 0)) {
-            alert("O valor pago é menor que o valor total!");
+        let total = items.reduce((acc, item) => acc + item.product!.price * item.quantity, 0);
+
+        if (paidAmount < total) {
+            alert("O cliente precisa pagar mais " + (total - paidAmount).toFixed(2).replace(".", ",") + " para finalizar a compra!");
             return;
         }
 
         SaleService.createSale({
             paymentMethod: paymentMethod!,
             items,
-            paidAmount,
-            change: Math.max(0, paidAmount - items.reduce((acc, item) => acc + item.product!.price * item.quantity, 0))
-        }, cashier!.id).then(() => nagivate("/caixas/" + cashier!.id));
+            paidAmount: 1,
+            change: Math.max(0, paidAmount - total)
+        }, cashier!.id).then(() => nagivate("/caixas/" + cashier?.open + "/" + cashier!.id));
     }
 
     const handleAddItem = (item: string | null) => {
@@ -148,7 +158,7 @@ export default function CreateSalePage() {
                 <TableContainer sx={{ maxHeight: "100%" }}>
                     <Table>
                         <TablePreview columns={columns}/>
-                        <TableRows page={0} rowsPerPage={items.length} items={transformItemSellToItems(items)} />
+                        <TableRows page={0} rowsPerPage={items.length} items={transformItemSellToItems(items, setItems)} />
                     </Table>
                 </TableContainer>
             </Grid>
@@ -175,13 +185,9 @@ export default function CreateSalePage() {
                     )} />
                     <div>
                         <InputLabel htmlFor="standard-adornment-amount" style={{left: "20%"}}>Total pago</InputLabel>
-                        <Input
-                            id="standard-adornment-amount"
-                            startAdornment={<InputAdornment position="start">R$</InputAdornment>}
-                            onChange={(event) => setPaidAmount(Number(event.target.value))}
-                        />
+                        <CurrencyInput onChange={(value) => setPaidAmount(value)} />
                     </div>
-                    <Button variant="contained" onClick={(event) => handleSubmit(event)} style={{height: "70%",marginTop: "auto", marginBottom:"auto", marginLeft: "30px"}}>Finalizar venda</Button>
+                    <Button variant="contained" onClick={() => handleSubmit()} style={{height: "70%",marginTop: "auto", marginBottom:"auto", marginLeft: "30px"}}>Finalizar venda</Button>
                 </FormControl>
             </Grid>
         </Grid>

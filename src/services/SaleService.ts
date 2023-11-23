@@ -31,9 +31,9 @@ export default class SaleService {
     });
   }
 
-  public static async createSale(sale: Sale, cashierId: number): Promise<void> {
+  public static async createSale(sale: Sale, cashierId: number): Promise<CashierDto> {
     let date = new Date();
-    fetch(`${import.meta.env.VITE_API_URL}/cashiers/addSale/${cashierId}`, {
+    return fetch(`${import.meta.env.VITE_API_URL}/cashiers/addSale/${cashierId}`, {
       body: JSON.stringify({
         items: sale.items?.map((item) => {
           return {

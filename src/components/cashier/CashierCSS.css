@@ -67,6 +67,7 @@
     border-left: 2px solid #E6E6E6; 
     justify-content: center;
     height: 90vh;
+    margin-left: 2.925rem;
 }
 
 a {
@@ -135,3 +136,7 @@ a {
     }
 
   }
+
+.d-grid {
+    display: grid !important;
+}

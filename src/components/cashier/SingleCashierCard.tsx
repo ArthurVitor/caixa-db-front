@@ -1,17 +1,17 @@
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import CashierDto from "../../dto/CashierDto";
-import Grid from "@mui/material/Grid";
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import CashierDto from '../../dto/CashierDto';
+import Grid from '@mui/material/Grid';
 
 import "./CashierCSS.css";
 
-import Stepper from "@mui/material/Stepper";
-import { palette, PaletteProps, spacing, SpacingProps } from "@mui/system";
-import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
-import { Box, Button } from "@mui/material";
-import CashierService from "../../services/CashierService";
+import Stepper from '@mui/material/Stepper';
+import { palette, PaletteProps, spacing, SpacingProps } from '@mui/system';
+import styled from 'styled-components';
+import { Link, useNavigate } from 'react-router-dom';
+import { Box, Button} from '@mui/material';
+import CashierService from '../../services/CashierService';
 
 interface BasicCardProps {
   cashier: CashierDto;
@@ -19,7 +19,7 @@ interface BasicCardProps {
 
 const Step = styled.div<PaletteProps>`
   ${palette}
-`;
+`; 
 
 const StepLabel = styled.div<PaletteProps>`
   ${palette}
@@ -37,63 +37,66 @@ export default function BasicCard({ cashier }: BasicCardProps) {
   const handleClick = async () => {
     try {
       await CashierService.closeCashier(cashier.id);
-      navigate("/caixas/false");
+      navigate('/caixas/false');
     } catch (error) {
-      console.error("Erro ao fechar o caixa", error);
+      console.error('Erro ao fechar o caixa', error);
     }
   };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <Grid container>
-        <Grid item xs={7}>
-          <Card sx={{borderRadius: 5 }} className='card divFlexCenter'>
-            <CardContent>
-              <Typography sx={{ fontSize: 20, marginBottom: 15, fontFamily: 'arial', fontWeight: 400, color: "#374151" }} color="text.secondary" gutterBottom>
-                Caixa {`${cashier.id}`}
-              </Typography>
-              <Typography variant="body2">
-                <span style={{ fontFamily: "arial", fontSize: 18 }}>Aberto desde: {cashier.openDate && (cashier.openDate.getDay() < 10 ? "0" + cashier.openDate.getDay() : cashier.openDate.getDay()) + "/" + cashier.openDate.getMonth() + "/" + cashier.openDate.getFullYear()}</span>
-                <br />
-                <span style={{ fontSize: 20, color: "#426B1F", fontWeight: 'bolder' }}>Sub Total: ${cashier.sales.reduce((acc, sales) => (acc + (sales.subTotal ?? 0)), 0).toFixed(2)}</span>
-              </Typography>
-              <Link to={`/vendas/${cashier.id}/criar-venda`}>
-                <Button style={{ marginTop: 40 }} className="custom-button-toggled">Adicionar venda</Button>
+    <Grid container columnSpacing={{md: 5}}>
+      <Card sx={{borderRadius: 5 }} className='card divFlexCenter'>
+        <CardContent>
+          <Typography sx={{ fontSize: 20, marginBottom: 15, fontFamily: 'arial', fontWeight: 400, color: "#374151" }} color="text.secondary" gutterBottom>
+            Caixa {`${cashier.id}`}
+          </Typography>
+          <Typography variant="body2">
+            <span style={{ fontFamily: "arial", fontSize: 18 }}>Aberto desde: {cashier.openDate && (cashier.openDate.getDay() < 10 ? "0" + cashier.openDate.getDay() : cashier.openDate.getDay()) + "/" + cashier.openDate.getMonth() + "/" + cashier.openDate.getFullYear()}</span>
+            <br />
+            <span style={{ fontSize: 20, color: "#426B1F", fontWeight: 'bolder' }}>Sub Total: ${cashier.sales.reduce((acc, sales) => (acc + (sales.subTotal ?? 0)), 0).toFixed(2)}</span>
+          </Typography>
+          <Link to={`/vendas/${cashier.id}/criar-venda`}>
+            <Button style={{ marginTop: 40 }} className="custom-button-toggled">Adicionar venda</Button>
+          </Link>
+        </CardContent>
+      </Card>
+      <div className='verticalHr'></div>
+      <div className='history'>
+        <Box p={4} className='boxSize'>
+        <Grid >
+          <div className='movimentacao'>
+            Movimentação
+          </div>
+          <div className='scroll'>
+          <Stepper orientation="vertical">
+            {cashier.sales.map((sale) => (
+              <Link to={`/vendas/${sale.id}`} style={{ textDecoration: "none" }} key={sale.id}>
+                <Step color="#374151">
+                  <StepLabel>
+                   <div className='divLineHistory' />
+                    <div className="divFlexCenter">
+                      <div className="divCircle"></div>
+                      {sale.subTotal?.toFixed(2)}
+                    </div>
+                    <p>{sale.paymentMethod?.name}</p>
+                  </StepLabel>
+                </Step>
               </Link>
-            </CardContent>  
-          </Card>
-        </Grid>
-        <Grid item xs={5}>
-          <div className="movimentacao">Movimentação</div>
-            <div className="scroll">
-              <Stepper orientation="vertical">
-                {cashier.sales.map((sale) => (
-                  <Link to={`/vendas/${sale.id}`} style={{ textDecoration: "none" }} key={sale.id}>
-                    <Step color="#374151">
-                      <StepLabel>
-                        <div className="divLineHistory" />
-                        <div className="divFlexCenter">
-                          <div className="divCircle"></div>
-                          {sale.subTotal?.toFixed(2)}
-                        </div>
-                        <p>{sale.paymentMethod?.name}</p>
-                      </StepLabel>
-                    </Step>
-                  </Link>
-                ))}
-              </Stepper>
+            ))}
+          </Stepper>
           </div>
-          <div className="valorTotal">
-            <span>
-              Valor total: R$
-              {cashier.sales.reduce((acc, sales) => acc + (sales.subTotal ?? 0), 0).toFixed(2)}
-            </span>
-          </div>
-          <Button className="custom-button float-r max-button" onClick={handleClick}>
-            Fechar caixa
-          </Button>
           </Grid>
+          <br></br>
+          <div className='valorTotal'>
+            <span>Valor total: R${cashier.sales.reduce((acc, sales) => (acc + (sales.subTotal ?? 0)), 0).toFixed(2)}</span>
+          </div>
+          <div className="d-grid">
+            <Button className="custom-button float-r max-button" onClick={handleClick}>Fechar caixa</Button>
+          </div>
+        </Box>
+      </div>
       </Grid>
-    </Box>
+      </Box>
   );
 }

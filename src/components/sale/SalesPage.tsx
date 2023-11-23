@@ -1,10 +1,10 @@
-import SaleTable from "./SalesTable";
+import ViewSales from "./ViewSales";
 
 export function SalesPage() {
   return (
     <div>
       <p>Listando todas as vendas</p>
-      <SaleTable/>
+      <ViewSales/>
     </div>
   );
 }

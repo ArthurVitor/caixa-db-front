@@ -1,20 +1,45 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-import { Grid, Paper, Table, TableBody, TableCell, TableContainer, TableRow, Button } from "@mui/material";
+import { Grid, Paper, Table, TableContainer, Button } from "@mui/material";
 
 import Sale from "../../dto/SaleDto";
 import SaleService from "../../services/SaleService";
-import TableTemplate, { Column } from "./templates/TableTemplate";
+import TablePreview, { Column } from "./templates/TablePreview";
+import TableRows from "./templates/TableRows";
+import ItemSell from "../../dto/ItemSellDto";
+
   
 const columns: Column[] = [
-{ id: "id", label: "Número", minWidth: 20 },
-{ id: "product", label: "Produto", minWidth: 90 },
-{ id: "amount", label: "Quantidade", minWidth: 90},
-{ id: "subTotal", label: "Subtotal", minWidth: 70 }
+    { id: "id", label: "Número", minWidth: 20 },
+    { id: "product", label: "Produto", minWidth: 90 },
+    { id: "amount", label: "Quantidade", minWidth: 90},
+    { id: "subTotal", label: "Subtotal", minWidth: 70 }
 ];
 
-export default function SalesDetailsPage() {
+function transformItemSellToItems(items: ItemSell[]) {
+    return items.map((item) => (
+        {
+            data: [
+                {
+                    key: "id", value: item.id!.toString()
+                },
+                {
+                    key: "product", value: item.product!.name
+                },
+                {
+                    key: "amount", value: item.quantity.toString()
+                },
+                {
+                    key: "subTotal", value: "R$ " + (item.product!.price * item.quantity).toFixed(2).replace(".", ",")
+                }
+            ]
+        }
+    ))
+}
+
+
+export default function ViewSalesDetailsPage() {
     const id = Number(useParams()["id"]);
 
     const [loading, setLoading] = useState(true);
@@ -31,7 +56,6 @@ export default function SalesDetailsPage() {
         SaleService.getSaleById(id).then((sale) => {
             setSale(sale);
             setLoading(false);
-            console.log(sale);
         });
     }, []);
 
@@ -40,9 +64,7 @@ export default function SalesDetailsPage() {
     const handleDeleteSale = (event: React.MouseEvent) => {
         event.preventDefault();
 
-        SaleService.deleteSaleById(id).then(() => {
-            nagivate("/vendas/");
-        });
+        SaleService.deleteSaleById(id).then(() => nagivate("/vendas/")).catch((error) => console.log(error));
     }
 
     if (loading) {
@@ -57,20 +79,8 @@ export default function SalesDetailsPage() {
             <Paper>
                 <TableContainer sx={{ maxHeight: "100%" }}>
                     <Table>
-                        <TableTemplate columns={columns}/>
-                        <TableBody>
-                            {sale.items!
-                                .map((item, index) => {
-                                    return (
-                                        <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                                            <TableCell key="id">{item.id}</TableCell>
-                                            <TableCell key="product">{item.product!.name}</TableCell>
-                                            <TableCell key="amount">{item.quantity}</TableCell>
-                                            <TableCell key="subTotal">R$ {(item.product!.price * item.quantity).toFixed(2).replace(".", ",")}</TableCell>
-                                        </TableRow>
-                                    );
-                            })}
-                        </TableBody>
+                        <TablePreview columns={columns}/>
+                        <TableRows page={0} rowsPerPage={sale.items!.length} items={transformItemSellToItems(sale.items!)} />
                     </Table>
                 </TableContainer>
             </Paper>

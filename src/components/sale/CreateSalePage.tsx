@@ -1,66 +1,68 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-import Autocomplete from '@mui/material/Autocomplete';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Grid from '@mui/material/Grid';
-import Input from '@mui/material/Input';
-import InputLabel from '@mui/material/InputLabel';
-import InputAdornment from '@mui/material/InputAdornment';
-import FormControl from '@mui/material/FormControl';
+import { Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, FormControl, InputAdornment, InputLabel, Input, TextField, Autocomplete } from "@mui/material";
 
-import CashierService from "../../../services/CashierService";
-import CashierDto from "../../../dto/CashierDto";
-import Product from "../../../dto/ProductDto";
-import ProductService from "../../../services/ProductService";
-import ItemSell from "../../../dto/ItemSellDto";
+import QuantityAmountButton from "./templates/QuantityAmountButton";
 
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import PaymentMethod from "../../../dto/PaymentMethodDto";
-import PaymentMethodService from "../../../services/PaymentMethodService";
+import CashierService from "../../services/CashierService";
+import ProductService from "../../services/ProductService";
+import PaymentMethodService from "../../services/PaymentMethodService";
+import SaleService from "../../services/SaleService";
 
-import './style.css'
-import SaleService from "../../../services/SaleService";
-import QuantityAmountButton from "../templates/QuantityAmountButton";
-
-interface Column {
-    id: "product" | "quantity" | "unit-price" | "total-price";
-    label: string;
-    minWidth?: number;
-    align?: "right";
-    format?: (value: number) => string;
-  }
+import CashierDto from "../../dto/CashierDto";
+import Product from "../../dto/ProductDto";
+import ItemSell from "../../dto/ItemSellDto";
+import PaymentMethod from "../../dto/PaymentMethodDto";
+import TablePreview, { Column } from "./templates/TablePreview";
+import TableRows from "./templates/TableRows";
 
 const columns: Column[] = [
     { id: "product", label: "Produto", minWidth: 70 },
     { id: "quantity", label: "Quantidade", minWidth: 30 },
-    { id: "unit-price", label: "Preço unitário", minWidth: 70 },
-    { id: "total-price", label: "Preço total", minWidth: 70 },
+    { id: "unitPrice", label: "Preço unitário", minWidth: 70 },
+    { id: "totalPrice", label: "Preço total", minWidth: 70 },
 ];
+
+function transformItemSellToItems(items: ItemSell[]) {
+    return items.map((item) => (
+        {
+            data: [
+                {
+                    key: "product", value: item.product!.name
+                },
+                {
+                    key: "quantity", value: item.quantity.toString()
+                },
+                {
+                    key: "unitPrice", value: "R$ " + item.product!.price.toFixed(2).replace(".", ",")
+                },
+                {
+                    key: "totalPrice", value: "R$ " + (item.product!.price * item.quantity).toFixed(2).replace(".", ",")
+                }
+            ]
+        }
+    ))
+}
 
 export default function CreateSalePage() {
     let id = Number(useParams()["id"]);
     
     const [loading, setLoading] = useState(true);
 
-    const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([{id: 1, name: "Pix"}]); // [1
-    const [products, setProducts] = useState<Product[]>([]); // [1
+    const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([{id: 1, name: "Pix"}]);
+    const [products, setProducts] = useState<Product[]>([]);
     const [cashier, setCashier] = useState<CashierDto>();
 
-    const [productSearch, setProductSearch] = useState<string>(""); // 2
-    const [items, setItems] = useState<ItemSell[]>([]); // 3
-    const [paymentMethod, setPaymentMethod] = useState<PaymentMethod | null>(null); // 4
-    const [paidAmount, setPaidAmount] = useState<number>(0); // 5
+    const [productSearch, setProductSearch] = useState<string>("");
+    const [items, setItems] = useState<ItemSell[]>([]);
+    const [paymentMethod, setPaymentMethod] = useState<PaymentMethod | null>(null);
+    const [paidAmount, setPaidAmount] = useState<number>(0);
 
-    const handleSubmit = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    const nagivate = useNavigate();
+
+    const handleSubmit = (event: React.MouseEvent) => {
         if (!cashier || !paymentMethod || !items.length) {
-            event.preventDefault();
             return;
         }
 
@@ -68,9 +70,7 @@ export default function CreateSalePage() {
             paymentMethod: paymentMethod!,
             items,
             paidAmount
-        }, cashier!.id);
-
-        // window.location.href = "/caixas/" + cashier!.id;
+        }, cashier!.id).then(() => nagivate("/caixas/" + cashier!.id));
     }
 
     const handleAddItem = (item: string | null) => {
@@ -100,7 +100,7 @@ export default function CreateSalePage() {
             setProducts(products);
             setPaymentMethods(paymentMethods);
             setLoading(false);
-        });
+        }).catch(() => nagivate("/caixas/"));
     }, []);
 
     useEffect(() => {}, [items, productSearch, paymentMethod]);
@@ -135,39 +135,8 @@ export default function CreateSalePage() {
             <Grid item xs={12} md={8} mt={2}>
                 <TableContainer sx={{ maxHeight: "100%" }}>
                     <Table>
-                        <TableHead>
-                        <TableRow>
-                            {columns.map((column) => (
-                            <TableCell
-                                key={column.id}
-                                align={column.align}
-                                style={{ top: 57, minWidth: column.minWidth }}
-                            >
-                            {column.label}
-                            </TableCell>
-                            ))}
-                        </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {items.map((item, index) => {
-                                return (
-                                    <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                                        <TableCell key={"product"}>{item.product?.name}</TableCell>
-                                        <TableCell key={"quantity"} style={{padding: "20px"}}>
-                                            <QuantityAmountButton quantity={item.quantity} onClickMinus={() => {
-                                                    item.quantity -= 1; if (item.quantity <= 0) {
-                                                    setItems([...items.filter((_, i) => i !== index)]);
-                                                } else {
-                                                    setItems([...items]);
-                                                }
-                                            }} onClickPlus={() => {item.quantity += 1; setItems([...items])}} />
-                                        </TableCell>
-                                        <TableCell key={"unit-price"}>R$ {item.product?.price.toFixed(2).replace(".", ",")}</TableCell>
-                                        <TableCell key={"total-price"}>R$ {(item.product!.price * item.quantity).toFixed(2).replace(".", ",")}</TableCell>
-                                    </TableRow>
-                                );
-                            })}
-                        </TableBody>
+                        <TablePreview columns={columns}/>
+                        <TableRows page={0} rowsPerPage={items.length} items={transformItemSellToItems(items)} />
                     </Table>
                 </TableContainer>
             </Grid>
@@ -200,7 +169,7 @@ export default function CreateSalePage() {
                             onChange={(event) => setPaidAmount(Number(event.target.value))}
                         />
                     </div>
-                    <Button variant="contained" component={Link} to={"/caixas/" + cashier!.id} onClick={(event) => handleSubmit(event)} style={{height: "70%",marginTop: "auto", marginBottom:"auto", marginLeft: "30px"}}>Finalizar venda</Button>
+                    <Button variant="contained" onClick={(event) => handleSubmit(event)} style={{height: "70%",marginTop: "auto", marginBottom:"auto", marginLeft: "30px"}}>Finalizar venda</Button>
                 </FormControl>
             </Grid>
         </Grid>

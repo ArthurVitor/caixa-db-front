@@ -16,7 +16,7 @@ export default class DateUtils {
         if (!date)
             return "00/00/0000";
 
-        return (date.getDay() < 10 ? "0" + date.getDay() : date.getDay()) + "/" + date.getMonth() + "/" + date.getFullYear();
+        return (date.getDate() < 10 ? "0" + date.getDate() : date.getDate()) + "/" + date.getMonth() + "/" + date.getFullYear();
     }
 
     public static getFormattedTime(date?: Date): string {

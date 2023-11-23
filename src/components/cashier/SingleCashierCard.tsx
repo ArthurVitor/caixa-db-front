@@ -74,12 +74,14 @@ export default function BasicCard({ cashier }: BasicCardProps) {
               <Link to={`/vendas/${sale.id}`} style={{ textDecoration: "none" }} key={sale.id}>
                 <Step color="#374151">
                   <StepLabel>
+                  <div className='divFlexCenter'>
                    <div className='divLineHistory' />
+                    <p id="paymentMethod">{sale.paymentMethod?.name}</p>
+                    </div>
                     <div className="divFlexCenter">
                       <div className="divCircle"></div>
                       {sale.subTotal?.toFixed(2)}
                     </div>
-                    <p>{sale.paymentMethod?.name}</p>
                   </StepLabel>
                 </Step>
               </Link>

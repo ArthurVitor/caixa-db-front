@@ -7,10 +7,7 @@ export default function CreateButton () {
 
     async function handleSubmit() {
        
-        const createdCashier = await CashierService.createCashier({
-            open: true,
-            sales: []
-        });
+        const createdCashier = await CashierService.createCashier();
         navigate(`/caixas/true/${createdCashier.id}`);
     }
 

@@ -38,7 +38,6 @@ const columns: Column[] = [
     id: 'discontinuationDate',
     label: 'Discontinuation date',
     minWidth: 170,
-    align: "right",
     format: (value) => String(value)
   },
 ];

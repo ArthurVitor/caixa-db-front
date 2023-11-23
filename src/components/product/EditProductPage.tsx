@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { Button } from '@mui/material';
+import { Button, Checkbox, FormControlLabel } from '@mui/material';
 import ProductService from '../../services/ProductService';
 import { useNavigate, useParams } from 'react-router-dom';
 import Product from '../../dto/ProductDto';
@@ -16,6 +16,7 @@ export default function EditProductPage() {
     name: "",
     price: 0,
     barcode: "",
+    isDiscontinued: false,
     discontinuationDate: null
   });
 
@@ -31,7 +32,6 @@ export default function EditProductPage() {
       ...product,
       name: e.target.value,
     });
-    console.log(product);
       
   }
 
@@ -49,26 +49,19 @@ export default function EditProductPage() {
     });
   }
 
-  // function handleChangeDescontinuate(e: React.ChangeEvent) {
-  //   if(e.target.checked) {
-  //     setProduct({
-  //       ...product,
-  //       discontinuationDate: new Date(),
-  //     })
-  //   }
-  //   console.log(product);
-  // }
+  function handleChangeDescontinuate(e: React.ChangeEvent) {
+    if(e.target.checked) {
+      setProduct({
+        ...product,
+        isDiscontinued: true,
+      })
+    }
+  }
 
   function handleSubmit() {
     ProductService.editProduct(Number(id), product)
-      .then(data => {
-        
-        if(data) {
-          return navigate("/produtos");
-        } else {
-          alert("Erro ao editar produto!");
-        }
-      })
+      .then(data => navigate("/produtos"))
+      .catch(err => console.error(err))
   }
 
   return (
@@ -107,12 +100,12 @@ export default function EditProductPage() {
           label="Barcode"
           defaultValue={product.barcode}
           />
-          {/* <FormControlLabel style={ { display: 'block', marginLeft: "12px" } }
+          <FormControlLabel style={ { display: 'block', marginLeft: "12px" } }
           control={<Checkbox onChange={(e) => {
             handleChangeDescontinuate(e);
           }}/>}
           label="Descontinuar o produto"
-          /> */}
+          />
         </div>
       </Box>
       <Button style={{ marginLeft: "24px", marginTop: "24px" }} onClick={() => {

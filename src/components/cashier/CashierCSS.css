@@ -44,35 +44,94 @@
 }
 
 .divCircle {
-    width: 20px;
-    height: 20px;
+    width: 1.3rem;
+    height: 1.3rem;
     background-color: var(--primary);
     border-radius: 50%;
-    display: flex;
-    margin-right: 20px;
+    margin-right: 1.3rem;
     margin-bottom:0;
 }
 
 .firstCircle {
-    margin-right: 20px;
-    margin-bottom:50px
+    margin-right: 1.3rem; /*20px*/
+    margin-bottom:3.25rem; /*50px*/
 }
 
 .divLineHistory {
     border-left: 2px solid var(--primary);
-    height: 50px;
+    height: 3.25rem;
     margin-left: 8.5px
 }
 
 .verticalHr {
     border-left: 2px solid #E6E6E6; 
-    display: flex;
-    align-items: center;
     justify-content: center;
     height: 90vh;
-    margin: 0px
 }
 
 a {
     text-decoration: none;
 }
+
+.movimentacao{
+    height: 3.25rem;
+    color: var(--primary);
+    font-weight: bold; 
+    font-size: 1.3rem; 
+}
+
+.card {
+    width: 29.20rem; /*450px */
+    height: 26rem; /*400px*/
+    background-color: #FAFAF5;
+    border: 2px solid #E6E6E6; 
+}
+
+.scroll {
+    overflow-y: scroll; 
+    max-height:26rem; 
+    scrollbar-width: none
+}
+
+.valorTotal {
+    height: 100px;
+    color: var(--primary);
+    font-weight: bold; 
+    font-size: 25px;
+}
+
+
+.historyCard {
+    width: 26rem; 
+    height: auto;
+    border: none; 
+    display: flex; 
+    align-items: center; 
+}
+
+.max-button {
+    width: 26rem;
+}
+
+
+@media screen and (max-width: 600px) {
+    .cardContainer {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .verticalHr {
+        height: 0;
+        width: 0;
+    }
+
+    .card {
+        width: 15rem;
+    }
+
+    .max-button {
+        width: 10rem;
+
+    }
+
+  }

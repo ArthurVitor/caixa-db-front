@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider, createRoutesFromElements, Route } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, createRoutesFromElements, Route, Navigate } from "react-router-dom";
 
 import  RootPage  from "./components/RootPage";
 import { CashierPage } from "./components/cashier/CashierPage";
@@ -17,6 +17,8 @@ import EditProductPage from "./components/product/EditProductPage";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootPage />}>
+      <Route path="/" element={<Navigate to="/caixas" />}></Route>
+      <Route path="*" element={<Navigate to="/caixas" />}></Route>
       <Route path="/caixas/:parametroBooleano" element={<CashierPage />} />
       <Route path="/caixas" element={<CashierPage />} />
       <Route path="/caixas/:parametroBooleano/:id" element={<CashierDetailsPage />} />

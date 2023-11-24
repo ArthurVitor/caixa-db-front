@@ -7,11 +7,12 @@ import Grid from '@mui/material/Grid';
 import "./CashierCSS.css";
 
 import Stepper from '@mui/material/Stepper';
-import { palette, PaletteProps } from '@mui/system';
+import { palette, PaletteProps} from '@mui/system';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { Box, Button} from '@mui/material';
 import CashierService from '../../services/CashierService';
+import DateUtils from '../../utils/DateUtils';
 
 interface BasicCardProps {
   cashier: CashierDto;
@@ -25,18 +26,12 @@ const StepLabel = styled.div<PaletteProps>`
   ${palette}
 `;
 
-/*
-const Box = styled.div<PaletteProps & SpacingProps>`
-  ${palette}
-  ${spacing}
-`; */
-
 export default function BasicCard({ cashier }: BasicCardProps) {
   const navigate = useNavigate();
 
   const handleClick = async () => {
     try {
-      await CashierService.closeCashier(cashier.id);
+      await CashierService.closeCashier(cashier.id!);
       navigate('/caixas/false');
     } catch (error) {
       console.error('Erro ao fechar o caixa', error);
@@ -52,7 +47,7 @@ export default function BasicCard({ cashier }: BasicCardProps) {
             Caixa {`${cashier.id}`}
           </Typography>
           <Typography variant="body2">
-            <span style={{ fontFamily: "arial", fontSize: 18 }}>Aberto desde: {cashier.openDate && (cashier.openDate.getDay() < 10 ? "0" + cashier.openDate.getDay() : cashier.openDate.getDay()) + "/" + cashier.openDate.getMonth() + "/" + cashier.openDate.getFullYear()}</span>
+            <span style={{ fontFamily: "arial", fontSize: 18 }}>Aberto desde: {(DateUtils.getFormattedDate(cashier.openDate))} às {(DateUtils.getFormattedTime(cashier.openDate))}</span>
             <br />
             <span style={{ fontSize: 20, color: "#426B1F", fontWeight: 'bolder' }}>Sub Total: ${cashier.sales.reduce((acc, sales) => (acc + (sales.subTotal ?? 0)), 0).toFixed(2)}</span>
           </Typography>

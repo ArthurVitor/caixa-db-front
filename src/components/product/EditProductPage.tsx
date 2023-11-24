@@ -66,7 +66,7 @@ export default function EditProductPage() {
 
   return (
     <>
-      <p style={{ marginLeft: "24px" }}>Adicionar novo produto</p>
+      <p style={{ marginLeft: "24px" }}>Editar Produto</p>
       <Box
       component="form"
       sx={{

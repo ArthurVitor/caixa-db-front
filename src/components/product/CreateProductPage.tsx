@@ -15,20 +15,20 @@ export default function CreateProductPage() {
         barcode: ""
     });
 
-    function handleChangeName(e: React.ChangeEvent) {
+    function handleChangeName(e: React.ChangeEvent<HTMLInputElement>) {
         setProduct({
             ...product,
             name: e.target?.value,
         });
         
     }
-    function handleChangePrice(e: React.ChangeEvent) {
+    function handleChangePrice(e: React.ChangeEvent<HTMLInputElement>) {
         setProduct({
             ...product,
             price: Number(e.target?.value),
         });
     }
-    function handleChangeBarcode(e: React.ChangeEvent) {
+    function handleChangeBarcode(e: React.ChangeEvent<HTMLInputElement>) {
         setProduct({
             ...product,
             barcode: e.target?.value,
@@ -57,7 +57,7 @@ export default function CreateProductPage() {
         autoComplete="off"
         >
         <div>
-            <TextField onChange={(e) => {
+            <TextField onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 handleChangeName(e);
             }}
             required
@@ -66,7 +66,7 @@ export default function CreateProductPage() {
             defaultValue=""
             className="name"
             />
-            <TextField onChange={(e) => {
+            <TextField onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 handleChangePrice(e);
             }}
             required
@@ -74,7 +74,7 @@ export default function CreateProductPage() {
             label="Price"
             defaultValue=""
             />
-            <TextField onChange={(e) => {
+            <TextField onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 handleChangeBarcode(e);
             }}
             required

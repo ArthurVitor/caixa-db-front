@@ -7,7 +7,7 @@ import Grid from '@mui/material/Grid';
 import "./CashierCSS.css";
 
 import Stepper from '@mui/material/Stepper';
-import { palette, PaletteProps } from '@mui/system';
+import { palette, PaletteProps} from '@mui/system';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { Box, Button} from '@mui/material';
@@ -26,18 +26,12 @@ const StepLabel = styled.div<PaletteProps>`
   ${palette}
 `;
 
-/*
-const Box = styled.div<PaletteProps & SpacingProps>`
-  ${palette}
-  ${spacing}
-`; */
-
 export default function BasicCard({ cashier }: BasicCardProps) {
   const navigate = useNavigate();
 
   const handleClick = async () => {
     try {
-      await CashierService.closeCashier(cashier.id);
+      await CashierService.closeCashier(cashier.id!);
       navigate('/caixas/false');
     } catch (error) {
       console.error('Erro ao fechar o caixa', error);

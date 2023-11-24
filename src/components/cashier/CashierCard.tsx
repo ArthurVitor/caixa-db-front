@@ -9,7 +9,6 @@ interface BasicCardProps {
   cashier: CashierDto;
 }
 
-
 export default function BasicCard({cashier}: BasicCardProps ) {
   return (
     <Card sx={{width: 250, height: 250, backgroundColor: "#FAFAF5", border: "2px solid #E6E6E6", borderRadius: 5 }}>

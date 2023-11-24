@@ -8,9 +8,11 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import Product from '../../dto/ProductDto';
+import { Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 interface Column {
-  id: 'id' | 'name' | 'price' | 'barcode' | 'discontinuationdate';
+  id: 'actions' | 'id' | 'name' | 'price' | 'barcode' | 'discontinuationDate';
   label: string;
   minWidth?: number;
   align?: 'right';
@@ -18,6 +20,7 @@ interface Column {
 }
 
 const columns: Column[] = [
+  { id: 'actions', label: 'Actions', minWidth: 170, },
   { id: 'id', label: 'ID', minWidth: 170, format: (value: number) => value.toLocaleString('en-US'), },
   { id: 'name', label: 'Name', minWidth: 170, },
   {
@@ -32,38 +35,41 @@ const columns: Column[] = [
     minWidth: 170,
   },
   {
-    id: 'discontinuationdate',
+    id: 'discontinuationDate',
     label: 'Discontinuation date',
     minWidth: 170,
-    align: "right",
     format: (value) => String(value)
   },
 ];
 
 interface Data {
+  actions: JSX.Element,
   id: number;
   name: string;
   price: number;
   barcode: string;
-  discontinuationdate: string | null;
+  discontinuationDate: Date | null;
 }
 
 function createData(
+  actions: JSX.Element,
   id: number,
   name: string,
   price: number,
   barcode: string,
-  discontinuationdate: string | null,
+  discontinuationDate: Date | null,
 ): Data {
-  return { id, name, price, barcode, discontinuationdate };
+  return { actions, id, name, price, barcode, discontinuationDate };
 }
 
 export default function ColumnGroupingTable(props: { productList: Product[] }) {
 
+  const navigate = useNavigate();
+
   const rows: object[] = [];
 
   props.productList.forEach(p => {
-    rows.push(createData(p.id, p.name, p.price, p.barcode, p.discontinuationdate))
+    rows.push(createData(<Button variant="text" style={{ color: "#374151" }} onClick={() => navigate(`/produtos/editar-produto/${p.id}`)}>Editar</Button>, p.id, p.name, p.price, p.barcode, p.discontinuationDate))
   })
 
   const [page, setPage] = React.useState(0);
@@ -99,18 +105,20 @@ export default function ColumnGroupingTable(props: { productList: Product[] }) {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.name}>
-                    {columns.map((column) => {
-                      const value = row[column.id];
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === 'number'
-                            ? column.format(value)
-                            : value}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
+                    <TableRow hover role="checkbox" tabIndex={-1} key={row.name}>
+                      {columns.map((column) => {
+                        const value = row[column.id];
+                        return (
+                          <>
+                            <TableCell key={column.id} align={column.align}>
+                              {column.format && typeof value === 'number'
+                                ? column.format(value)
+                                : value}
+                            </TableCell>
+                          </>
+                        );
+                      })}
+                    </TableRow>
                 );
               })}
           </TableBody>

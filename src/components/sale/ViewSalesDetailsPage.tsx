@@ -64,7 +64,7 @@ export default function ViewSalesDetailsPage() {
     const handleDeleteSale = (event: React.MouseEvent) => {
         event.preventDefault();
 
-        SaleService.deleteSaleById(id).then(() => nagivate("/vendas/")).catch((error) => console.log(error));
+        SaleService.deleteSaleById(id).then(() => setTimeout(() => nagivate("/vendas/"), 200)).catch((error) => console.log(error));
     }
 
     if (loading) {

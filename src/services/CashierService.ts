@@ -73,9 +73,9 @@ export default class CashierService {
         }); 
     }
 
-    public static async createCashier(cashier: Cashier): Promise<void> {
+    public static async createCashier(): Promise<Cashier> {
         let date = new Date();
-        fetch(`${import.meta.env.VITE_API_URL}/cashiers/save`, {
+        return fetch(`${import.meta.env.VITE_API_URL}/cashiers/save`, {
             body: JSON.stringify({
                 openDate: DateUtils.getFormattedDate(date) + " " + DateUtils.getFormattedTime(date),
                 isOpen:true

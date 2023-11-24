@@ -92,7 +92,8 @@ export default function CreateSalePage() {
             items,
             paidAmount: 1,
             change: Math.max(0, paidAmount - total)
-        }, cashier!.id).then(() => nagivate("/caixas/" + cashier?.open + "/" + cashier!.id));
+        }, cashier!.id!)
+        .then(() => setTimeout(() => nagivate("/caixas/" + cashier?.open + "/" + cashier!.id), 200));
     }
 
     const handleAddItem = (item: string | null) => {

@@ -1,15 +1,14 @@
 import { Button } from "@mui/material";
 import CashierService from "../../services/CashierService";
-import { useState } from "react";
-import CashierDto from "../../dto/CashierDto";
+import {useNavigate } from 'react-router-dom';
 
 export default function CreateButton () {
+    const navigate = useNavigate();
 
-    function handleSubmit() {
-        CashierService.createCashier({
-            open: true,
-            sales: []
-        });
+    async function handleSubmit() {
+       
+        const createdCashier = await CashierService.createCashier();
+        navigate(`/caixas/true/${createdCashier.id}`);
     }
 
     return (

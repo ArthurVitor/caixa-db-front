@@ -12,6 +12,7 @@ import ViewSalesDetailsPage from "./components/sale/ViewSalesDetailsPage";
 import CreateProductPage from "./components/product/CreateProductPage";
 import CreateSalePage from "./components/sale/CreateSalePage";
 import CashierDetailsPage from "./components/cashier/CashierDetailsPage";
+import EditProductPage from "./components/product/EditProductPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -24,6 +25,7 @@ const router = createBrowserRouter(
       <Route path="/vendas/:id/criar-venda" element={<CreateSalePage />} />
       <Route path="/produtos" element={<ProductPage />} />
       <Route path="/produtos/criar-produto" element={<CreateProductPage />} />
+      <Route path="/produtos/editar-produto/:id" element={<EditProductPage />} />
       <Route path="/itemsell" element={<ItemSellPage />} />
     </Route>
   )

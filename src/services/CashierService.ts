@@ -77,7 +77,7 @@ export default class CashierService {
         let date = new Date();
         return fetch(`${import.meta.env.VITE_API_URL}/cashiers/save`, {
             body: JSON.stringify({
-                openDate: DateUtils.getFormattedDate(date) + " " + DateUtils.getFormattedTime(date),
+                openDate: DateUtils.getFormattedDate(date, false) + " " + DateUtils.getFormattedTime(date),
                 isOpen:true
             }),
             method: "POST",

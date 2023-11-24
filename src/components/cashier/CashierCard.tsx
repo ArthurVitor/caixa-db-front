@@ -3,6 +3,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CashierDto from '../../dto/CashierDto';
 import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
+import DateUtils from '../../utils/DateUtils';
 
 interface BasicCardProps {
   cashier: CashierDto;
@@ -20,7 +21,7 @@ export default function BasicCard({cashier}: BasicCardProps ) {
         <Typography variant="body2">
           <span style={{fontSize: 20, color: "#426B1F", fontWeight: 'bolder'}}>Subtotal: R${cashier.sales.reduce((acc, sales) => (acc + (sales.subTotal ?? 0)), 0).toFixed(2).replace(".", ",")}</span>
           <br />
-          <span style={{fontFamily: "arial", fontSize: 18}}>Aberto desde: {(cashier.openDate.getDay() < 10 ? "0" + cashier.openDate.getDay(): cashier.openDate.getDay()) +"/" + cashier.openDate.getMonth() +"/" + cashier.openDate.getFullYear()}</span>
+          <span style={{fontFamily: "arial", fontSize: 18}}>Aberto desde: {(DateUtils.getFormattedDate(cashier.openDate))}</span>
         </Typography>
       </CardContent>
     </Card>

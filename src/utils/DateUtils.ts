@@ -12,11 +12,11 @@ export default class DateUtils {
         return new Date(Number(year), Number(month), Number(day), Number(hour), Number(minute), Number(second));
     }
     
-    public static getFormattedDate(date?: Date): string {
+    public static getFormattedDate(date?: Date, formalMonth: boolean = true): string {
         if (!date)
             return "00/00/0000";
 
-        return (date.getDate() < 10 ? "0" + date.getDate() : date.getDate()) + "/" + date.getMonth() + "/" + date.getFullYear();
+        return (date.getDate() < 10 ? "0" + date.getDate() : date.getDate()) + "/" + (formalMonth ? date.getMonth() : date.getMonth() + 1) + "/" + date.getFullYear();
     }
 
     public static getFormattedTime(date?: Date): string {

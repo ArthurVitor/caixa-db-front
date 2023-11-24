@@ -6,3 +6,24 @@ h3 {
 .new-product {
     margin-bottom: 15px !important;
 }
+
+.gridCenter-h {
+    display: flex !important;
+    justify-content: center !important;
+}
+
+.d-flex {
+    display: flex !important;
+}
+
+.flex-column {
+    flex-direction: column !important;
+}
+
+.mb-2 {
+    margin-bottom: 2rem !important; 
+}
+
+.mt-2 {
+    margin-top: 2rem !important;
+}

@@ -1,9 +1,10 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { Button } from '@mui/material';
+import { Button, Grid } from '@mui/material';
 import ProductService from '../../services/ProductService';
 import { useNavigate } from 'react-router-dom';
+import "./ProductPage.css";
 
 export default function CreateProductPage() {
 
@@ -48,45 +49,52 @@ export default function CreateProductPage() {
 
   return (
     <>
-        <p>Adicionar novo produto</p>
-        <Box
-        component="form"
-        sx={{
-            '& .MuiTextField-root': { m: 3, width: '25ch' },
-        }}
-        autoComplete="off"
-        >
-        <div>
-            <TextField onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                handleChangeName(e);
-            }}
-            required
-            id="outlined-required"
-            label="Name"
-            defaultValue=""
-            className="name"
-            />
-            <TextField onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                handleChangePrice(e);
-            }}
-            required
-            id="outlined-required"
-            label="Price"
-            defaultValue=""
-            />
-            <TextField onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                handleChangeBarcode(e);
-            }}
-            required
-            id="outlined-required"
-            label="Barcode"
-            defaultValue=""
-            />
-        </div>
+        <Box>
+            <h3>Adicionar Novo Produto</h3>
+            <div>
+                <div className="d-flex flex-column mb-2">
+                    <label htmlFor="">Nome</label>
+                    <TextField onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        handleChangeName(e);
+                    }}
+                        required
+                        id="outlined-required"
+                        label="Name"
+                        defaultValue=""
+                        className="name"
+                    />
+                </div>
+
+                <div className="d-flex flex-column mb-2">
+                    <label htmlFor="">Preço</label>
+                    <TextField onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        handleChangePrice(e);
+                    }}
+                        required
+                        id="outlined-required"
+                        label="Price"
+                        defaultValue=""
+                    />
+                </div>
+
+                <div className="d-flex flex-column mb-2">
+                    <label htmlFor="">Código de Barras</label>
+                    <TextField onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        handleChangeBarcode(e);
+                    }}
+                        required
+                        id="outlined-required"
+                        label="Barcode"
+                        defaultValue=""
+                    />
+                </div>
+                <div className="d-flex">
+                    <Button onClick={() => {
+                        handleSubmit()
+                    }} className="custom-button-toggled">Criar</Button>
+                </div>
+            </div>
         </Box>
-        <Button onClick={() => {
-            handleSubmit()
-        }} className="custom-button-toggled">Criar</Button>
     </>
   );
 }

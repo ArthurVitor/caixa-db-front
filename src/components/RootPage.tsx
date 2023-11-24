@@ -122,9 +122,12 @@ export default function MiniDrawer() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Pato-Checkout
-          </Typography>
+          <img src="/pato.png" alt="" className='patoIcon' />
+          <Link to={"/"}>
+            <Typography variant="h6" noWrap component="div" className='patoCheckoutTitle'>
+              Pato Checkout
+            </Typography>
+          </Link>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>

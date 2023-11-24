@@ -14,7 +14,7 @@ export default function CreateButton () {
     return (
         <>
         <Button className='custom-button float-r' onClick={() => {handleSubmit()}}>
-           Criar
+           Abrir
         </Button>
         </>
     );

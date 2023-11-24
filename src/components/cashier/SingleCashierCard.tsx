@@ -12,6 +12,7 @@ import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { Box, Button} from '@mui/material';
 import CashierService from '../../services/CashierService';
+import DateUtils from '../../utils/DateUtils';
 
 interface BasicCardProps {
   cashier: CashierDto;
@@ -52,7 +53,7 @@ export default function BasicCard({ cashier }: BasicCardProps) {
             Caixa {`${cashier.id}`}
           </Typography>
           <Typography variant="body2">
-            <span style={{ fontFamily: "arial", fontSize: 18 }}>Aberto desde: {cashier.openDate && (cashier.openDate.getDay() < 10 ? "0" + cashier.openDate.getDay() : cashier.openDate.getDay()) + "/" + cashier.openDate.getMonth() + "/" + cashier.openDate.getFullYear()}</span>
+            <span style={{ fontFamily: "arial", fontSize: 18 }}>Aberto desde: {(DateUtils.getFormattedDate(cashier.openDate))} às {(DateUtils.getFormattedTime(cashier.openDate))}</span>
             <br />
             <span style={{ fontSize: 20, color: "#426B1F", fontWeight: 'bolder' }}>Sub Total: ${cashier.sales.reduce((acc, sales) => (acc + (sales.subTotal ?? 0)), 0).toFixed(2)}</span>
           </Typography>

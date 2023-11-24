@@ -3,7 +3,7 @@ import DateUtils from "../utils/DateUtils";
 
 export default class CashierService {
     public static async getAll(): Promise<Cashier[]> {
-        return fetch (`http://localhost:8080/api/cashiers/all`).then(response => {
+        return fetch (`${import.meta.env.VITE_API_URL}/cashiers/all`).then(response => {
             if (response.ok) {
                 return response.json().then((cashiers) => 
                     cashiers.map((cashier: any) => ({
@@ -18,7 +18,7 @@ export default class CashierService {
     }
 
     public static async getById(id: number): Promise<Cashier> {
-        return fetch(`http://localhost:8080/api/cashiers/${id}`).then(response => {
+        return fetch(`${import.meta.env.VITE_API_URL}/cashiers/${id}`).then(response => {
             if(response.ok) {
                 return response.json().then((cashier) => ({ 
                     ...cashier, 
@@ -32,7 +32,7 @@ export default class CashierService {
     }
 
     public static async getByIsOpen(isOpen: boolean): Promise<Cashier[]> {
-        return fetch(`http://localhost:8080/api/cashiers/isOpen/${isOpen}`).then(response => {
+        return fetch(`${import.meta.env.VITE_API_URL}/cashiers/isOpen/${isOpen}`).then(response => {
             if(response.ok) {
                 return response.json();
             } else {
@@ -42,7 +42,7 @@ export default class CashierService {
     }
     
     public static async getTotal(id: number):Promise<number> {
-        return fetch(`http://localhost:8080/api/cashiers/totalSales/${id}`).then(response => {
+        return fetch(`${import.meta.env.VITE_API_URL}/cashiers/totalSales/${id}`).then(response => {
             if(response.ok) {
                 return response.json();
             } else {
@@ -64,12 +64,31 @@ export default class CashierService {
     
 
       public static async closeCashier(id:number): Promise<void> {
-        return fetch(`http://localhost:8080/api/cashiers/close/${id}`).then(response => {
+        return fetch(`${import.meta.env.VITE_API_URL}/cashiers/close/${id}`).then(response => {
             if(response.ok) {
                 return response.json();
             } else {
                 throw new Error("Service"); 
             }
         }); 
+    }
+
+    public static async createCashier(): Promise<Cashier> {
+        let date = new Date();
+        return fetch(`${import.meta.env.VITE_API_URL}/cashiers/save`, {
+            body: JSON.stringify({
+                openDate: DateUtils.getFormattedDate(date) + " " + DateUtils.getFormattedTime(date),
+                isOpen:true
+            }),
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+              },
+        }).then((response) => {
+            if (!response.ok) {
+                throw new Error(`Error. Status: ${response.status}`);
+            }
+            return response.json();
+        })
     }
 }

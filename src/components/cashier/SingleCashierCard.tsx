@@ -7,7 +7,7 @@ import Grid from '@mui/material/Grid';
 import "./CashierCSS.css";
 
 import Stepper from '@mui/material/Stepper';
-import { palette, PaletteProps, spacing, SpacingProps } from '@mui/system';
+import { palette, PaletteProps } from '@mui/system';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { Box, Button} from '@mui/material';

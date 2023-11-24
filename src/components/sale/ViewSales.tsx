@@ -30,7 +30,7 @@ function transformSalesToItems(sales: Sale[]) {
           key: "id", value: sale.id!.toString()
         },
         {
-          key: "action", value: (<Button component={Link} to={"/vendas/" + sale.id} variant="contained">Editar</Button>)
+          key: "action", value: (<Button component={Link} to={"/vendas/" + sale.id} variant="contained">Visualizar</Button>)
         },
         {
           key: "resume", value: (

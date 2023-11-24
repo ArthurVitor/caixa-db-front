@@ -1,89 +1,9 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  --primary-color:#374151;
-  --secondary-color:#426B1F; 
-  --backgound-color: #FFFFFF; 
-  --hover: rgba(133, 129, 129, 0.1); 
-  color-scheme: light dark;
-  color:var(--primary-color);
-  background-color:var(--backgound-color);
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
+.patoIcon {
+  height: 2.5rem;
+  width: 2.5rem;
 }
 
-/* The side navigation menu */
-.sidebar {
-  margin: 0;
-  padding: 0;
-  width: 250px;
-  background-color: var(--backgound-color);
-  position: fixed;
-  height: 100%;
-  overflow: auto;
-  border-right: 1px solid rgb(226, 222, 222);
-  text-align: center;
-  
-}
-
-/* Sidebar links */
-.sidebar a {
-  display: block;
-  color: var(--primary-color);
-  padding: 16px;
+.patoCheckoutTitle {
   text-decoration: none;
-
-}
-
-/* Active/current link */
-.sidebar a.active {
-  background-color: #04AA6D;
-  color: white;
-}
-
-/* Links on mouse-over */
-.sidebar a:hover:not(.active) {
-  background-color: var(--hover);
-}
-
-/* Page content. The value of the margin-left property should match the value of the sidebar's width property */
-div.content {
-  margin-left: 250px;
-  padding: 1px 16px;
-  height: 1000px;
-}
-
-/* On screens that are less than 700px wide, make the sidebar into a topbar */
-@media screen and (max-width: 700px) {
-  .sidebar {
-    width: 100%;
-    height: auto;
-    position: relative;
-  }
-  .sidebar a {float: left;}
-  div.content {margin-left: 0;}
-}
-
-/* On screens that are less than 400px, display the bar vertically, instead of horizontally */
-@media screen and (max-width: 400px) {
-  .sidebar a {
-    text-align: center;
-    float: none;
-  }
-}
-
-.content {
-  margin-left: 250px;
-  padding: 1px 16px;
-  height: 1000px;
-}
-
-.margin-bottom {
-  margin-bottom: 2rem !important;
+  color: whitesmoke;
 }

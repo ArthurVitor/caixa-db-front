@@ -89,7 +89,9 @@ export default function BasicCard({ cashier }: BasicCardProps) {
             <span>Valor total: R${cashier.sales.reduce((acc, sales) => (acc + (sales.subTotal ?? 0)), 0).toFixed(2)}</span>
           </div>
           <div className="d-grid">
-            <Button className="custom-button float-r max-button" onClick={handleClick}>Fechar caixa</Button>
+            {
+              cashier.open ? <Button className="custom-button float-r max-button" onClick={handleClick}>Fechar caixa</Button> : null
+            }
           </div>
         </Box>
       </div>

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import CustomPaginationActionsTable from "./ProductTable";
 import ProductService from "../../services/ProductService";
 import Product from "../../dto/ProductDto";
-import { Button } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 export function ProductPage() {
@@ -25,9 +25,9 @@ export function ProductPage() {
   
   return (
     <>
-      <h3>Listando todos os produtos</h3>
-      <Button className="custom-button-toggled new-product" onClick={handleClick}>Criar Produto</Button>
+      <h3>Listagem de Produtos</h3>
       <CustomPaginationActionsTable productList={productList}/>
+      <Button className="custom-button-toggled new-product mt-2" onClick={handleClick}>Criar Produto</Button>
     </>
   );
 }
